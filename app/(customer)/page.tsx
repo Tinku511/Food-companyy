@@ -242,47 +242,7 @@ export default async function HomePage() {
 
       <Divider />
 
-      {/* ─── OUR STORY (Personal Offset Layout) ───────────────────────── */}
-      <section id="our-story" className="py-24" aria-label="Our Story">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="relative flex flex-col items-center lg:flex-row lg:items-start">
-            <div className="relative h-[500px] w-full shrink-0 overflow-hidden rounded-3xl shadow-card lg:w-[55%]">
-              <Image
-                src="https://images.unsplash.com/photo-1558222218-b7b54eede3f3?w=1200&q=80"
-                alt="Our founder at the farm"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="relative -mt-20 w-[90%] rounded-3xl border border-stone-100 bg-background p-8 shadow-2xl sm:p-12 lg:-ml-16 lg:mt-24 lg:w-[45%]">
-              <span className="font-mono text-xs uppercase tracking-widest text-brass">
-                Our Story
-              </span>
-              <h2 className="mt-4 font-display text-4xl font-bold text-charcoal">
-                Rooted in passion, grown with care.
-              </h2>
-              <p className="mt-6 leading-relaxed text-stone-600">
-                It started with a simple belief: food should be honest. We traveled across the
-                country connecting directly with farmers who share our obsessive standards for
-                natural cultivation.
-              </p>
-              <p className="mt-4 leading-relaxed text-stone-600">
-                Today, every product on our shelves tells a story of sustainable agriculture and
-                uncompromised quality. We bring the harvest directly to your table—just as nature
-                intended.
-              </p>
-              <div className="mt-8">
-                <span className="font-display text-2xl italic text-brass">Maria Rossi</span>
-                <span className="mt-1 block text-xs uppercase tracking-widest text-stone-400">
-                  Founder & Curator
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <Divider />
 
       {/* ─── WHY CHOOSE US (Asymmetric Text/Grid) ─────────────────────── */}
       <section id="why-choose-us" className="py-16" aria-label="Why choose SesemeFoods">

@@ -145,8 +145,8 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
 
             {/* Price */}
             <div className="flex items-baseline gap-3">
-              <span className="font-display text-5xl font-bold text-charcoal">${price}</span>
-              <span className="text-sm text-stone-400">per unit · free shipping over $50</span>
+              <span className="font-display text-5xl font-bold text-charcoal">₹{price}</span>
+              <span className="text-sm text-stone-400">per unit · free shipping over ₹500</span>
             </div>
 
             {/* Divider */}

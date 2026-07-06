@@ -67,7 +67,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         </p>
 
         <div className="mt-2 flex items-center justify-between">
-          <span className="font-display text-2xl font-bold text-charcoal">${price}</span>
+          <span className="font-display text-2xl font-bold text-charcoal">₹{price}</span>
           {isLowStock && (
             <span className="text-[11px] font-medium text-red-500">Only {product.stock} left!</span>
           )}
