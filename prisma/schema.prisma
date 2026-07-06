@@ -1,0 +1,208 @@
+// This is your Prisma schema file.
+// Learn more: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum Role {
+  CUSTOMER
+  ADMIN
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum FulfilmentStatus {
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum ShipmentStatus {
+  PREPARING
+  IN_TRANSIT
+  OUT_FOR_DELIVERY
+  DELIVERED
+  FAILED
+}
+
+// ---------------------------------------------------------------------------
+// User — represents both customers and admins, differentiated by `role`
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         Role      @default(CUSTOMER)
+  avatarUrl    String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  // Relations
+  orders    Order[]
+  blogPosts BlogPost[]
+  cart      Cart?
+
+  @@map("users")
+}
+
+// ---------------------------------------------------------------------------
+// Product — items listed in the store
+// ---------------------------------------------------------------------------
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Decimal  @db.Decimal(10, 2)
+  imageUrl    String
+  stock       Int      @default(0)
+  category    String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  orderItems OrderItem[]
+  cartItems  CartItem[]
+
+  @@map("products")
+}
+
+// ---------------------------------------------------------------------------
+// Order — a purchase placed by a User
+// ---------------------------------------------------------------------------
+
+model Order {
+  id                String           @id @default(cuid())
+  userId            String
+  totalAmount       Decimal          @db.Decimal(10, 2)
+  paymentStatus     PaymentStatus    @default(PENDING)
+  fulfilmentStatus  FulfilmentStatus @default(PROCESSING)
+  shippingAddress   String
+  notes             String?
+  razorpayOrderId   String?          @unique
+  razorpayPaymentId String?          @unique
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  // Relations
+  user      User        @relation(fields: [userId], references: [id])
+  items     OrderItem[]
+  shipment  Shipment?
+
+  @@map("orders")
+}
+
+// ---------------------------------------------------------------------------
+// OrderItem — a single line item within an Order
+// ---------------------------------------------------------------------------
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  unitPrice Decimal @db.Decimal(10, 2)
+
+  // Relations
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+// ---------------------------------------------------------------------------
+// Shipment — delivery tracking information for an Order
+// ---------------------------------------------------------------------------
+
+model Shipment {
+  id                String         @id @default(cuid())
+  orderId           String         @unique
+  trackingNumber    String?        @unique
+  carrier           String?
+  status            ShipmentStatus @default(PREPARING)
+  estimatedDelivery DateTime?
+  statusUpdates     Json           @default("[]")
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+
+  // Relations
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@map("shipments")
+}
+
+// ---------------------------------------------------------------------------
+// BlogPost — articles authored by admin users
+// ---------------------------------------------------------------------------
+
+model BlogPost {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  content     String
+  excerpt     String?
+  coverImage  String?
+  authorId    String
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  author User @relation(fields: [authorId], references: [id])
+
+  @@map("blog_posts")
+}
+
+// ---------------------------------------------------------------------------
+// Cart — Shopping cart for a User
+// ---------------------------------------------------------------------------
+
+model Cart {
+  id        String     @id @default(cuid())
+  userId    String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  // Relations
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items CartItem[]
+
+  @@map("carts")
+}
+
+// ---------------------------------------------------------------------------
+// CartItem — Product in a Cart
+// ---------------------------------------------------------------------------
+
+model CartItem {
+  id        String   @id @default(cuid())
+  cartId    String
+  productId String
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  cart    Cart    @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("cart_items")
+}
