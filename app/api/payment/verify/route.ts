@@ -65,12 +65,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'Order not found' }, { status: 404 });
     }
 
-    // Hoist `order` so it's always in scope for the return statement below
-    let order = existingOrder;
-
     if (existingOrder.paymentStatus !== 'PAID') {
       // Signature is valid — update our Order in the database
-      order = await prisma.order.update({
+      await prisma.order.update({
         where: { id: orderId, userId: session.user.id },
         data: {
           paymentStatus: 'PAID',
@@ -81,10 +78,10 @@ export async function POST(req: Request) {
       // Send the order confirmation email
       const { sendOrderConfirmationEmail } = await import('@/lib/email');
       await sendOrderConfirmationEmail(
-        order.id,
+        existingOrder.id,
         existingOrder.user.email,
         existingOrder.user.name,
-        Number(order.totalAmount),
+        Number(existingOrder.totalAmount),
         existingOrder.items.map((i) => ({ productName: i.product.name, quantity: i.quantity })),
       );
 
@@ -95,7 +92,7 @@ export async function POST(req: Request) {
     }
 
     // Always return the orderId — whether just-paid or already-paid (idempotent)
-    return NextResponse.json({ success: true, orderId: order.id });
+    return NextResponse.json({ success: true, orderId: existingOrder.id });
   } catch (error) {
     console.error('Payment verify error:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });

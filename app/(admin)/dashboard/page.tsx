@@ -49,6 +49,8 @@ const statusColors: Record<string, string> = {
   CANCELLED: 'bg-plum/10 text-plum border border-plum/20',
 };
 
+export const dynamic = 'force-dynamic';
+
 export default async function DashboardPage() {
   const stats = await getStats();
 
