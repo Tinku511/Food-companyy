@@ -32,7 +32,7 @@ export async function GET(req: Request) {
       totalAmount: order.totalAmount,
       paymentStatus: order.paymentStatus,
       fulfilmentStatus: order.fulfilmentStatus,
-      items: order.items.map(item => ({
+      items: order.items.map((item) => ({
         quantity: item.quantity,
         productName: item.product.name,
         productImage: item.product.imageUrl,

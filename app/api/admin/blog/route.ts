@@ -33,7 +33,10 @@ export async function POST(req: Request) {
 
     const existing = await prisma.blogPost.findUnique({ where: { slug } });
     if (existing) {
-      return NextResponse.json({ message: 'A post with this slug already exists' }, { status: 400 });
+      return NextResponse.json(
+        { message: 'A post with this slug already exists' },
+        { status: 400 },
+      );
     }
 
     const post = await prisma.blogPost.create({
@@ -50,7 +53,8 @@ export async function POST(req: Request) {
 
     return NextResponse.json(post, { status: 201 });
   } catch (err: any) {
-    if (err.message === 'Unauthorized') return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    if (err.message === 'Unauthorized')
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     console.error(err);
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }

@@ -19,15 +19,15 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default:  'SesemeFoods — Farm-Fresh Natural Foods',
+    default: 'SesemeFoods — Farm-Fresh Natural Foods',
     template: '%s | SesemeFoods',
   },
   description:
     'Discover the finest natural, farm-to-table food products. Shop snacks, beverages, dairy, and bakery items crafted with care.',
-  keywords:   ['organic food', 'natural snacks', 'farm fresh', 'healthy eating', 'SesemeFoods'],
+  keywords: ['organic food', 'natural snacks', 'farm fresh', 'healthy eating', 'SesemeFoods'],
   openGraph: {
     siteName: 'SesemeFoods',
-    type:     'website',
+    type: 'website',
   },
 };
 
@@ -38,7 +38,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${playfair.variable} font-sans leading-relaxed antialiased`}>
+      <body
+        className={`${inter.variable} ${playfair.variable} font-sans leading-relaxed antialiased`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

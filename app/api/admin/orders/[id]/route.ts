@@ -20,7 +20,7 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
     const existingOrder = await prisma.order.findUnique({
       where: { id: params.id },
-      include: { user: true }
+      include: { user: true },
     });
 
     if (!existingOrder) {
@@ -41,13 +41,14 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         order.id,
         existingOrder.user.email,
         existingOrder.user.name,
-        fulfilmentStatus
+        fulfilmentStatus,
       );
     }
 
     return NextResponse.json(order);
   } catch (err: any) {
-    if (err.message === 'Unauthorized') return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    if (err.message === 'Unauthorized')
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     console.error(err);
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }

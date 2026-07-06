@@ -41,7 +41,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
     return NextResponse.json(product);
   } catch (err: any) {
-    if (err.message === 'Unauthorized') return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    if (err.message === 'Unauthorized')
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     console.error(err);
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
@@ -53,7 +54,8 @@ export async function DELETE(_: Request, { params }: { params: { id: string } })
     await prisma.product.delete({ where: { id: params.id } });
     return NextResponse.json({ message: 'Deleted' });
   } catch (err: any) {
-    if (err.message === 'Unauthorized') return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    if (err.message === 'Unauthorized')
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     console.error(err);
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }

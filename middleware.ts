@@ -6,7 +6,7 @@ import { LRUCache } from 'lru-cache';
 const rateLimit = 5; // max requests
 const windowMs = 60 * 1000; // 1 minute
 
-// In-memory store (Note: In Next.js Edge runtime, this state is per-isolate. 
+// In-memory store (Note: In Next.js Edge runtime, this state is per-isolate.
 // It works for basic protection but isn't a distributed lock).
 const tokenCache = new LRUCache<string, number>({
   max: 1000,
@@ -27,7 +27,7 @@ export function middleware(req: NextRequest) {
         console.warn(`Rate limit exceeded for IP: ${ip} on path: ${path}`);
         return new NextResponse(
           JSON.stringify({ message: 'Too many requests, please try again later.' }),
-          { status: 429, headers: { 'Content-Type': 'application/json' } }
+          { status: 429, headers: { 'Content-Type': 'application/json' } },
         );
       }
 
@@ -39,8 +39,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    '/api/auth/callback/credentials',
-    '/api/checkout',
-  ],
+  matcher: ['/api/auth/callback/credentials', '/api/checkout'],
 };

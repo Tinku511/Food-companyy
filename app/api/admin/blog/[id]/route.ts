@@ -31,7 +31,10 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
     // Check slug uniqueness excluding self
     const existing = await prisma.blogPost.findUnique({ where: { slug } });
     if (existing && existing.id !== params.id) {
-      return NextResponse.json({ message: 'A post with this slug already exists' }, { status: 400 });
+      return NextResponse.json(
+        { message: 'A post with this slug already exists' },
+        { status: 400 },
+      );
     }
 
     const currentPost = await prisma.blogPost.findUnique({ where: { id: params.id } });
@@ -45,15 +48,14 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         content,
         excerpt,
         coverImage,
-        publishedAt: isPublished 
-          ? (currentPost.publishedAt || new Date()) 
-          : null,
+        publishedAt: isPublished ? currentPost.publishedAt || new Date() : null,
       },
     });
 
     return NextResponse.json(post);
   } catch (err: any) {
-    if (err.message === 'Unauthorized') return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    if (err.message === 'Unauthorized')
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     console.error(err);
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }
@@ -65,7 +67,8 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     await prisma.blogPost.delete({ where: { id: params.id } });
     return NextResponse.json({ message: 'Deleted' });
   } catch (err: any) {
-    if (err.message === 'Unauthorized') return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    if (err.message === 'Unauthorized')
+      return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     console.error(err);
     return NextResponse.json({ message: 'Internal server error' }, { status: 500 });
   }

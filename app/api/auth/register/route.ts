@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import bcrypt from 'bcrypt';
 
@@ -13,12 +12,12 @@ const registerSchema = z.object({
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    
+
     const parsed = registerSchema.safeParse(body);
     if (!parsed.success) {
-      return Response.json({ message: parsed.error.errors[0].message }, { status: 400 });
+      return Response.json({ message: parsed.error.issues[0].message }, { status: 400 });
     }
-    
+
     const { name, email, password } = parsed.data;
 
     // Check if user already exists
@@ -34,7 +33,7 @@ export async function POST(req: Request) {
     const passwordHash = await bcrypt.hash(password, 10);
 
     // Create user
-    const user = await prisma.user.create({
+    await prisma.user.create({
       data: {
         name,
         email,

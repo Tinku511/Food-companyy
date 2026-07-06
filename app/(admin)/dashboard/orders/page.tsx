@@ -37,7 +37,7 @@ export default function AdminOrdersPage() {
     setUpdateError('');
     // Optimistic UI update
     setOrders((prev) =>
-      prev.map((o) => (o.id === orderId ? { ...o, fulfilmentStatus: newStatus } : o))
+      prev.map((o) => (o.id === orderId ? { ...o, fulfilmentStatus: newStatus } : o)),
     );
 
     try {
@@ -83,7 +83,12 @@ export default function AdminOrdersPage() {
       {updateError && (
         <div className="flex items-center justify-between rounded-xl border border-red-200 bg-red-50 px-5 py-3 text-sm font-medium text-red-600">
           <span>⚠️ {updateError}</span>
-          <button onClick={() => setUpdateError('')} className="ml-4 text-red-400 hover:text-red-600">✕</button>
+          <button
+            onClick={() => setUpdateError('')}
+            className="ml-4 text-red-400 hover:text-red-600"
+          >
+            ✕
+          </button>
         </div>
       )}
 
@@ -113,12 +118,15 @@ export default function AdminOrdersPage() {
               </thead>
               <tbody className="divide-y divide-stone-100">
                 {orders.map((order) => (
-                  <tr key={order.id} className="transition hover:bg-background/60">
+                  <tr key={order.id} className="hover:bg-background/60 transition">
                     <td className="px-5 py-4">
                       <p className="font-mono text-xs font-medium text-charcoal">{order.id}</p>
                       <p className="text-xs text-stone-400">
                         {new Date(order.createdAt).toLocaleString('en-IN', {
-                          day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'
+                          day: 'numeric',
+                          month: 'short',
+                          hour: '2-digit',
+                          minute: '2-digit',
                         })}
                       </p>
                     </td>
@@ -130,15 +138,20 @@ export default function AdminOrdersPage() {
                       <p className="text-stone-600">
                         {order.items.length} item{order.items.length !== 1 ? 's' : ''}
                       </p>
-                      <p className="text-xs text-stone-400 truncate max-w-[150px]" title={order.items.map(i => i.product.name).join(', ')}>
-                        {order.items.map(i => i.product.name).join(', ')}
+                      <p
+                        className="max-w-[150px] truncate text-xs text-stone-400"
+                        title={order.items.map((i) => i.product.name).join(', ')}
+                      >
+                        {order.items.map((i) => i.product.name).join(', ')}
                       </p>
                     </td>
                     <td className="px-5 py-4 font-medium text-charcoal">
                       ₹{Number(order.totalAmount).toFixed(2)}
                     </td>
                     <td className="px-5 py-4">
-                      <span className={`inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${paymentColors[order.paymentStatus] ?? 'bg-stone-100 text-stone-600'}`}>
+                      <span
+                        className={`inline-flex rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${paymentColors[order.paymentStatus] ?? 'bg-stone-100 text-stone-600'}`}
+                      >
                         {order.paymentStatus}
                       </span>
                     </td>
@@ -146,7 +159,7 @@ export default function AdminOrdersPage() {
                       <select
                         value={order.fulfilmentStatus}
                         onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                        className={`rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider outline-none transition focus:ring-2 focus:ring-brass/20 cursor-pointer ${statusColors[order.fulfilmentStatus] ?? 'bg-stone-100 text-stone-600'}`}
+                        className={`cursor-pointer rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider outline-none transition focus:ring-2 focus:ring-brass/20 ${statusColors[order.fulfilmentStatus] ?? 'bg-stone-100 text-stone-600'}`}
                         style={{ appearance: 'none' }}
                       >
                         <option value="PROCESSING">Processing</option>

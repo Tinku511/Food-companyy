@@ -95,7 +95,9 @@ test('4. Add product to cart (requires login)', async ({ page }) => {
   await page.goto('http://localhost:3000/cart');
   await page.waitForLoadState('networkidle');
   // Empty cart message should NOT be visible
-  const emptyMsg = page.locator('text=Your cart is empty').or(page.locator('text=Nothing to checkout'));
+  const emptyMsg = page
+    .locator('text=Your cart is empty')
+    .or(page.locator('text=Nothing to checkout'));
   const isEmpty = await emptyMsg.isVisible().catch(() => false);
   expect(isEmpty).toBeFalsy();
 });

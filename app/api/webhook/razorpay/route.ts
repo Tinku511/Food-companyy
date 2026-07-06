@@ -38,8 +38,8 @@ export async function POST(req: Request) {
     const event = payload.event;
 
     if (event === 'payment.captured' || event === 'order.paid') {
-      const razorpayOrderId = payload?.payload?.payment?.entity?.order_id
-        ?? payload?.payload?.order?.entity?.id;
+      const razorpayOrderId =
+        payload?.payload?.payment?.entity?.order_id ?? payload?.payload?.order?.entity?.id;
 
       const razorpayPaymentId = payload?.payload?.payment?.entity?.id;
 
@@ -52,8 +52,8 @@ export async function POST(req: Request) {
         where: { razorpayOrderId },
         include: {
           user: true,
-          items: { include: { product: true } }
-        }
+          items: { include: { product: true } },
+        },
       });
 
       if (!order) {
@@ -79,7 +79,7 @@ export async function POST(req: Request) {
           order.user.email,
           order.user.name,
           Number(updatedOrder.totalAmount),
-          order.items.map(i => ({ productName: i.product.name, quantity: i.quantity }))
+          order.items.map((i) => ({ productName: i.product.name, quantity: i.quantity })),
         );
 
         // Optionally clear the cart here as well

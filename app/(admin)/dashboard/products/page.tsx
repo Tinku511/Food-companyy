@@ -17,7 +17,9 @@ export default function AdminProductsPage() {
     setLoading(false);
   }
 
-  useEffect(() => { fetchProducts(); }, []);
+  useEffect(() => {
+    fetchProducts();
+  }, []);
 
   async function handleDelete(id: string) {
     setDeletingId(id);
@@ -34,13 +36,21 @@ export default function AdminProductsPage() {
         <div>
           <p className="text-xs font-semibold uppercase tracking-widest text-brass">Catalogue</p>
           <h1 className="mt-1 font-display text-3xl font-bold text-charcoal">Products</h1>
-          <p className="mt-1 text-sm text-stone-500">{products.length} products in your catalogue</p>
+          <p className="mt-1 text-sm text-stone-500">
+            {products.length} products in your catalogue
+          </p>
         </div>
         <Link
           href="/dashboard/products/new"
           className="flex items-center gap-2 rounded-lg bg-charcoal px-4 py-2 text-sm font-medium text-white transition hover:bg-charcoal/90"
         >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
           </svg>
           Add Product
@@ -57,7 +67,12 @@ export default function AdminProductsPage() {
           <div className="py-20 text-center text-stone-400">
             <p className="mb-4 text-4xl">📦</p>
             <p className="font-medium">No products yet.</p>
-            <Link href="/dashboard/products/new" className="mt-3 inline-block text-sm text-brass hover:underline">Add your first product →</Link>
+            <Link
+              href="/dashboard/products/new"
+              className="mt-3 inline-block text-sm text-brass hover:underline"
+            >
+              Add your first product →
+            </Link>
           </div>
         ) : (
           <table className="w-full text-sm">
@@ -73,7 +88,7 @@ export default function AdminProductsPage() {
             </thead>
             <tbody className="divide-y divide-stone-100">
               {products.map((product) => (
-                <tr key={product.id} className="transition hover:bg-background/60">
+                <tr key={product.id} className="hover:bg-background/60 transition">
                   <td className="px-5 py-3.5">
                     <div className="flex items-center gap-3">
                       <img
@@ -83,7 +98,7 @@ export default function AdminProductsPage() {
                       />
                       <div>
                         <p className="font-medium text-charcoal">{product.name}</p>
-                        <p className="text-xs text-stone-400 line-clamp-1">{product.description}</p>
+                        <p className="line-clamp-1 text-xs text-stone-400">{product.description}</p>
                       </div>
                     </div>
                   </td>
@@ -92,17 +107,25 @@ export default function AdminProductsPage() {
                       {product.category}
                     </span>
                   </td>
-                  <td className="px-5 py-3.5 font-medium text-charcoal">₹{Number(product.price).toFixed(2)}</td>
+                  <td className="px-5 py-3.5 font-medium text-charcoal">
+                    ₹{Number(product.price).toFixed(2)}
+                  </td>
                   <td className="px-5 py-3.5">
-                    <span className={`font-medium ${Number(product.stock) === 0 ? 'text-red-500' : 'text-charcoal'}`}>
+                    <span
+                      className={`font-medium ${Number(product.stock) === 0 ? 'text-red-500' : 'text-charcoal'}`}
+                    >
                       {product.stock}
                     </span>
                   </td>
                   <td className="px-5 py-3.5">
                     {product.isActive ? (
-                      <span className="inline-flex rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">Active</span>
+                      <span className="inline-flex rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">
+                        Active
+                      </span>
                     ) : (
-                      <span className="inline-flex rounded-full bg-stone-100 px-2.5 py-0.5 text-xs font-semibold text-stone-500">Inactive</span>
+                      <span className="inline-flex rounded-full bg-stone-100 px-2.5 py-0.5 text-xs font-semibold text-stone-500">
+                        Inactive
+                      </span>
                     )}
                   </td>
                   <td className="px-5 py-3.5">
@@ -111,8 +134,18 @@ export default function AdminProductsPage() {
                         href={`/dashboard/products/${product.id}/edit`}
                         className="flex items-center gap-1 rounded-lg border border-stone-200 px-3 py-1.5 text-xs font-medium text-stone-600 transition hover:border-brass hover:text-brass"
                       >
-                        <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        <svg
+                          className="h-3.5 w-3.5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={1.5}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                          />
                         </svg>
                         Edit
                       </Link>
@@ -120,8 +153,18 @@ export default function AdminProductsPage() {
                         onClick={() => setConfirmDelete(product.id)}
                         className="flex items-center gap-1 rounded-lg border border-stone-200 px-3 py-1.5 text-xs font-medium text-stone-600 transition hover:border-red-300 hover:text-red-500"
                       >
-                        <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        <svg
+                          className="h-3.5 w-3.5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                          strokeWidth={1.5}
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                          />
                         </svg>
                         Delete
                       </button>
@@ -139,12 +182,24 @@ export default function AdminProductsPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
           <div className="mx-4 w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
             <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
-              <svg className="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              <svg
+                className="h-6 w-6 text-red-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
               </svg>
             </div>
             <h3 className="mb-1 font-display text-lg font-bold text-charcoal">Delete Product?</h3>
-            <p className="mb-6 text-sm text-stone-500">This action cannot be undone. The product will be permanently removed.</p>
+            <p className="mb-6 text-sm text-stone-500">
+              This action cannot be undone. The product will be permanently removed.
+            </p>
             <div className="flex gap-3">
               <button
                 onClick={() => setConfirmDelete(null)}

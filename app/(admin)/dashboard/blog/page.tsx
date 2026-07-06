@@ -18,7 +18,9 @@ export default function AdminBlogPage() {
     setLoading(false);
   }
 
-  useEffect(() => { fetchPosts(); }, []);
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   async function handleDelete(id: string) {
     if (!confirm('Are you sure you want to delete this post?')) return;
@@ -41,7 +43,13 @@ export default function AdminBlogPage() {
           href="/dashboard/blog/new"
           className="flex items-center gap-2 rounded-lg bg-charcoal px-4 py-2 text-sm font-medium text-white transition hover:bg-charcoal/90"
         >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
           </svg>
           Write Post
@@ -58,7 +66,12 @@ export default function AdminBlogPage() {
           <div className="py-20 text-center text-stone-400">
             <p className="mb-4 text-4xl">✍️</p>
             <p className="font-medium">No blog posts yet.</p>
-            <Link href="/dashboard/blog/new" className="mt-3 inline-block text-sm text-brass hover:underline">Write your first post →</Link>
+            <Link
+              href="/dashboard/blog/new"
+              className="mt-3 inline-block text-sm text-brass hover:underline"
+            >
+              Write your first post →
+            </Link>
           </div>
         ) : (
           <table className="w-full text-sm">
@@ -73,7 +86,7 @@ export default function AdminBlogPage() {
             </thead>
             <tbody className="divide-y divide-stone-100">
               {posts.map((post) => (
-                <tr key={post.id} className="transition hover:bg-background/60">
+                <tr key={post.id} className="hover:bg-background/60 transition">
                   <td className="px-5 py-3.5">
                     <p className="font-medium text-charcoal">{post.title}</p>
                     <p className="text-xs text-stone-400">/{post.slug}</p>
@@ -81,9 +94,13 @@ export default function AdminBlogPage() {
                   <td className="px-5 py-3.5 text-stone-600">{post.author.name}</td>
                   <td className="px-5 py-3.5">
                     {post.publishedAt ? (
-                      <span className="inline-flex rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">Published</span>
+                      <span className="inline-flex rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">
+                        Published
+                      </span>
                     ) : (
-                      <span className="inline-flex rounded-full bg-stone-100 px-2.5 py-0.5 text-xs font-semibold text-stone-500">Draft</span>
+                      <span className="inline-flex rounded-full bg-stone-100 px-2.5 py-0.5 text-xs font-semibold text-stone-500">
+                        Draft
+                      </span>
                     )}
                   </td>
                   <td className="px-5 py-3.5 text-stone-500">

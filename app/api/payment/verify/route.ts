@@ -11,7 +11,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
     }
 
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId } = await req.json();
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, orderId } =
+      await req.json();
 
     if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !orderId) {
       return NextResponse.json({ message: 'Missing payment verification fields' }, { status: 400 });
@@ -45,7 +46,10 @@ export async function POST(req: Request) {
     const isSignatureValid = expectedSignature === razorpay_signature;
 
     if (!isSignatureValid) {
-      return NextResponse.json({ message: 'Payment verification failed: invalid signature' }, { status: 400 });
+      return NextResponse.json(
+        { message: 'Payment verification failed: invalid signature' },
+        { status: 400 },
+      );
     }
 
     // Fetch the order to check if it's already paid, and to get user details
@@ -53,8 +57,8 @@ export async function POST(req: Request) {
       where: { id: orderId, userId: session.user.id },
       include: {
         user: true,
-        items: { include: { product: true } }
-      }
+        items: { include: { product: true } },
+      },
     });
 
     if (!existingOrder) {
@@ -81,7 +85,7 @@ export async function POST(req: Request) {
         existingOrder.user.email,
         existingOrder.user.name,
         Number(order.totalAmount),
-        existingOrder.items.map(i => ({ productName: i.product.name, quantity: i.quantity }))
+        existingOrder.items.map((i) => ({ productName: i.product.name, quantity: i.quantity })),
       );
 
       // Clear the user's cart since the order was placed successfully
@@ -97,4 +101,3 @@ export async function POST(req: Request) {
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
-

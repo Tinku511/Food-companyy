@@ -17,19 +17,17 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { href: '/',         label: 'Home'     },
+    { href: '/', label: 'Home' },
     { href: '/products', label: 'Products' },
-    { href: '/blog',     label: 'Blog'     },
-    { href: '/track',    label: 'Track Order' },
-    { href: '/about',    label: 'About'    },
+    { href: '/blog', label: 'Blog' },
+    { href: '/track', label: 'Track Order' },
+    { href: '/about', label: 'About' },
   ];
 
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-charcoal/95 backdrop-blur-md shadow-xl shadow-black/20'
-          : 'bg-transparent'
+        scrolled ? 'bg-charcoal/95 shadow-xl shadow-black/20 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
@@ -37,7 +35,7 @@ export default function Navbar() {
         <Link href="/" className="group flex items-center gap-2.5" id="navbar-logo">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brass to-plum/80 shadow-md shadow-brass/40 transition-transform duration-200 group-hover:scale-110">
             <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/>
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
             </svg>
           </span>
           <span className="font-display text-xl font-bold text-white">
@@ -64,11 +62,17 @@ export default function Navbar() {
 
           {session ? (
             <div className="hidden items-center gap-3 md:flex">
-              <Link href="/orders" className="text-sm font-medium text-stone-300 transition hover:text-white">
+              <Link
+                href="/orders"
+                className="text-sm font-medium text-stone-300 transition hover:text-white"
+              >
                 Orders
               </Link>
               {session.user.role === 'ADMIN' && (
-                <Link href="/dashboard" className="text-sm font-medium text-stone-300 transition hover:text-white">
+                <Link
+                  href="/dashboard"
+                  className="text-sm font-medium text-stone-300 transition hover:text-white"
+                >
                   Dashboard
                 </Link>
               )}
@@ -81,10 +85,16 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="hidden items-center gap-3 md:flex">
-              <Link href="/login" className="text-sm font-medium text-stone-300 transition hover:text-white">
+              <Link
+                href="/login"
+                className="text-sm font-medium text-stone-300 transition hover:text-white"
+              >
                 Log in
               </Link>
-              <Link href="/signup" className="rounded-full bg-brass px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-brass/90">
+              <Link
+                href="/signup"
+                className="rounded-full bg-brass px-4 py-1.5 text-sm font-semibold text-white transition hover:bg-brass/90"
+              >
                 Sign up
               </Link>
             </div>
@@ -100,11 +110,23 @@ export default function Navbar() {
           >
             <span className="sr-only">Menu</span>
             {menuOpen ? (
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <svg
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             ) : (
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <svg
+                className="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             )}
@@ -114,7 +136,7 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="animate-slide-down border-t border-white/10 bg-charcoal/98 backdrop-blur-md md:hidden">
+        <div className="animate-slide-down bg-charcoal/98 border-t border-white/10 backdrop-blur-md md:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-4 sm:px-6">
             {navLinks.map((link) => (
               <Link
@@ -146,7 +168,10 @@ export default function Navbar() {
                   </Link>
                 )}
                 <button
-                  onClick={() => { setMenuOpen(false); signOut(); }}
+                  onClick={() => {
+                    setMenuOpen(false);
+                    signOut();
+                  }}
                   className="rounded-lg px-4 py-3 text-left text-sm font-medium text-stone-300 transition hover:bg-white/10 hover:text-white"
                 >
                   Sign out

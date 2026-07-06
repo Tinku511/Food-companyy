@@ -9,10 +9,10 @@ interface ProductCardProps {
 
 // Category colour map
 const categoryColors: Record<string, string> = {
-  Snacks:    'bg-orange-100 text-orange-700',
+  Snacks: 'bg-orange-100 text-orange-700',
   Beverages: 'bg-blue-100 text-blue-700',
-  Dairy:     'bg-brass/10 text-brass',
-  Bakery:    'bg-amber-100 text-amber-700',
+  Dairy: 'bg-brass/10 text-brass',
+  Bakery: 'bg-amber-100 text-amber-700',
 };
 
 function categoryColor(cat: string) {
@@ -32,7 +32,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
       aria-label={`View ${product.name}`}
     >
       {/* Image */}
-      <div className="relative aspect-square w-full overflow-hidden bg-background rounded-2xl m-2 shrink-0 max-w-[calc(100%-1rem)] mx-auto mt-2">
+      <div className="relative m-2 mx-auto mt-2 aspect-square w-full max-w-[calc(100%-1rem)] shrink-0 overflow-hidden rounded-2xl bg-background">
         <Image
           src={product.imageUrl}
           alt={product.name}
@@ -42,13 +42,17 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           priority={priority}
         />
         {/* Category badge */}
-        <span className={`absolute left-3 top-3 rounded-full px-3 py-0.5 text-xs font-semibold ${categoryColor(product.category)}`}>
+        <span
+          className={`absolute left-3 top-3 rounded-full px-3 py-0.5 text-xs font-semibold ${categoryColor(product.category)}`}
+        >
           {product.category}
         </span>
         {/* Out of stock overlay */}
         {outOfStock && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-            <span className="rounded-full bg-stone-900 px-4 py-1.5 text-xs font-semibold text-white">Out of Stock</span>
+            <span className="rounded-full bg-stone-900 px-4 py-1.5 text-xs font-semibold text-white">
+              Out of Stock
+            </span>
           </div>
         )}
       </div>
@@ -75,8 +79,14 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         {/* CTA arrow */}
         <div className="mt-3 flex items-center gap-1.5 text-xs font-semibold text-brass transition-all duration-200 group-hover:gap-2.5">
           View Product
-          <svg className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+          <svg
+            className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
         </div>
       </div>

@@ -9,7 +9,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
-  
+
   const [form, setForm] = useState({
     title: '',
     slug: '',
@@ -89,8 +89,17 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
     <div className="mx-auto max-w-4xl space-y-8">
       {/* Header */}
       <div className="flex items-center gap-4">
-        <Link href="/dashboard/blog" className="flex h-10 w-10 items-center justify-center rounded-xl border border-stone-200 bg-white text-stone-500 transition hover:border-stone-300 hover:text-charcoal">
-          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <Link
+          href="/dashboard/blog"
+          className="flex h-10 w-10 items-center justify-center rounded-xl border border-stone-200 bg-white text-stone-500 transition hover:border-stone-300 hover:text-charcoal"
+        >
+          <svg
+            className="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
         </Link>
@@ -101,7 +110,7 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
       </div>
 
       {/* Form */}
-      <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm p-6 sm:p-8">
+      <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white p-6 shadow-sm sm:p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && (
             <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-600">
@@ -111,56 +120,91 @@ export default function EditBlogPostPage({ params }: { params: { id: string } })
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <label htmlFor="title" className="mb-1.5 block text-sm font-medium text-stone-700">Title</label>
+              <label htmlFor="title" className="mb-1.5 block text-sm font-medium text-stone-700">
+                Title
+              </label>
               <input
-                id="title" name="title" type="text" required
-                value={form.title} onChange={handleChange}
+                id="title"
+                name="title"
+                type="text"
+                required
+                value={form.title}
+                onChange={handleChange}
                 className="form-input"
               />
             </div>
 
             <div>
-              <label htmlFor="slug" className="mb-1.5 block text-sm font-medium text-stone-700">URL Slug</label>
+              <label htmlFor="slug" className="mb-1.5 block text-sm font-medium text-stone-700">
+                URL Slug
+              </label>
               <input
-                id="slug" name="slug" type="text" required
-                value={form.slug} onChange={handleChange}
+                id="slug"
+                name="slug"
+                type="text"
+                required
+                value={form.slug}
+                onChange={handleChange}
                 className="form-input"
               />
             </div>
 
             <div>
-              <label htmlFor="coverImage" className="mb-1.5 block text-sm font-medium text-stone-700">Cover Image URL</label>
+              <label
+                htmlFor="coverImage"
+                className="mb-1.5 block text-sm font-medium text-stone-700"
+              >
+                Cover Image URL
+              </label>
               <input
-                id="coverImage" name="coverImage" type="url"
-                value={form.coverImage} onChange={handleChange}
+                id="coverImage"
+                name="coverImage"
+                type="url"
+                value={form.coverImage}
+                onChange={handleChange}
                 className="form-input"
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="excerpt" className="mb-1.5 block text-sm font-medium text-stone-700">Excerpt (Short Summary)</label>
+              <label htmlFor="excerpt" className="mb-1.5 block text-sm font-medium text-stone-700">
+                Excerpt (Short Summary)
+              </label>
               <textarea
-                id="excerpt" name="excerpt" rows={2}
-                value={form.excerpt} onChange={handleChange}
+                id="excerpt"
+                name="excerpt"
+                rows={2}
+                value={form.excerpt}
+                onChange={handleChange}
                 className="form-input"
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="content" className="mb-1.5 flex justify-between text-sm font-medium text-stone-700">
+              <label
+                htmlFor="content"
+                className="mb-1.5 flex justify-between text-sm font-medium text-stone-700"
+              >
                 <span>Content (Markdown supported)</span>
               </label>
               <textarea
-                id="content" name="content" rows={12} required
-                value={form.content} onChange={handleChange}
+                id="content"
+                name="content"
+                rows={12}
+                required
+                value={form.content}
+                onChange={handleChange}
                 className="form-input font-mono"
               />
             </div>
 
             <div className="flex items-center gap-3 pt-2 sm:col-span-2">
               <input
-                id="isPublished" name="isPublished" type="checkbox"
-                checked={form.isPublished} onChange={handleChange}
+                id="isPublished"
+                name="isPublished"
+                type="checkbox"
+                checked={form.isPublished}
+                onChange={handleChange}
                 className="h-5 w-5 rounded border-stone-300 text-brass focus:ring-brass/20"
               />
               <label htmlFor="isPublished" className="text-sm font-medium text-stone-700">

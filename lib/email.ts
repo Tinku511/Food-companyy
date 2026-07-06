@@ -42,7 +42,7 @@ export async function sendOrderConfirmationEmail(
   userEmail: string,
   userName: string,
   totalAmount: number,
-  items: OrderItemInfo[]
+  items: OrderItemInfo[],
 ) {
   if (!process.env.SENDGRID_API_KEY) {
     console.warn('SENDGRID_API_KEY is not set. Order confirmation email not sent.');
@@ -93,7 +93,7 @@ export async function sendShippingUpdateEmail(
   orderId: string,
   userEmail: string,
   userName: string,
-  newStatus: string
+  newStatus: string,
 ) {
   if (!process.env.SENDGRID_API_KEY) {
     console.warn('SENDGRID_API_KEY is not set. Shipping update email not sent.');
@@ -105,7 +105,8 @@ export async function sendShippingUpdateEmail(
 
   if (newStatus === 'SHIPPED') {
     subject = `Your order has shipped! - ${orderId}`;
-    statusMessage = "Great news! Your order has been packed and handed over to our delivery partners. It's on its way to you.";
+    statusMessage =
+      "Great news! Your order has been packed and handed over to our delivery partners. It's on its way to you.";
   } else if (newStatus === 'DELIVERED') {
     subject = `Your order has been delivered - ${orderId}`;
     statusMessage = 'Your order has been marked as delivered. We hope you enjoy your items!';

@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans:    ['Inter', 'Arial', 'Helvetica', 'sans-serif'],
+        sans: ['Inter', 'Arial', 'Helvetica', 'sans-serif'],
         display: ['Playfair Display', 'Georgia', 'serif'],
       },
       colors: {
@@ -19,7 +19,7 @@ const config: Config = {
         brass: '#B8860B',
         plum: '#5C2A3A',
         brand: {
-          50:  'var(--brand-50)',
+          50: 'var(--brand-50)',
           100: 'var(--brand-100)',
           200: 'var(--brand-200)',
           300: 'var(--brand-300)',
@@ -31,7 +31,7 @@ const config: Config = {
           900: 'var(--brand-900)',
         },
         accent: {
-          50:  'var(--accent-50)',
+          50: 'var(--accent-50)',
           100: 'var(--accent-100)',
           400: 'var(--accent-400)',
           500: 'var(--accent-500)',
@@ -39,8 +39,8 @@ const config: Config = {
           700: 'var(--accent-700)',
         },
         surface: {
-          0:   'var(--surface-0)',
-          50:  'var(--surface-50)',
+          0: 'var(--surface-0)',
+          50: 'var(--surface-50)',
           100: 'var(--surface-100)',
           200: 'var(--surface-200)',
           300: 'var(--surface-300)',
@@ -56,7 +56,7 @@ const config: Config = {
         'brand-sm': '0 2px 8px rgba(184, 134, 11, 0.2)',
         'brand-md': '0 4px 20px rgba(184, 134, 11, 0.3)',
         'brand-lg': '0 8px 40px rgba(184, 134, 11, 0.4)',
-        'card':     '0 4px 24px rgba(0,0,0,0.04)',
+        card: '0 4px 24px rgba(0,0,0,0.04)',
         'card-hover': '0 12px 32px rgba(0,0,0,0.08)',
       },
       backgroundImage: {
@@ -65,22 +65,29 @@ const config: Config = {
         'green-gradient': 'linear-gradient(135deg, #5C2A3A 0%, #7a384d 100%)',
       },
       keyframes: {
-        fadeIn:   { from: { opacity: '0' },                                   to: { opacity: '1' } },
-        slideUp:  { from: { opacity: '0', transform: 'translateY(28px)' },    to: { opacity: '1', transform: 'translateY(0)' } },
-        scaleIn:  { from: { opacity: '0', transform: 'scale(0.95)' },         to: { opacity: '1', transform: 'scale(1)' } },
-        float:    { '0%,100%': { transform: 'translateY(0px)' },              '50%': { transform: 'translateY(-8px)' } },
+        fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } },
+        slideUp: {
+          from: { opacity: '0', transform: 'translateY(28px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        scaleIn: {
+          from: { opacity: '0', transform: 'scale(0.95)' },
+          to: { opacity: '1', transform: 'scale(1)' },
+        },
+        float: {
+          '0%,100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-8px)' },
+        },
       },
       animation: {
-        'fade-in':  'fadeIn 0.5s ease both',
+        'fade-in': 'fadeIn 0.5s ease both',
         'slide-up': 'slideUp 0.6s ease both',
         'scale-in': 'scaleIn 0.4s ease both',
-        'float':    'float 3s ease-in-out infinite',
+        float: 'float 3s ease-in-out infinite',
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
+  plugins: [require('@tailwindcss/typography')],
 };
 
 export default config;

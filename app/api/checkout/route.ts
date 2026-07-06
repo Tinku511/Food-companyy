@@ -19,7 +19,9 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const checkoutSchema = z.object({
-      shippingAddress: z.string().min(10, 'Please provide a complete shipping address (min 10 characters)'),
+      shippingAddress: z
+        .string()
+        .min(10, 'Please provide a complete shipping address (min 10 characters)'),
       notes: z.string().optional(),
     });
 

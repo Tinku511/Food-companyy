@@ -8,10 +8,10 @@ interface CategoryFilterProps {
 }
 
 export default function CategoryFilter({ categories }: CategoryFilterProps) {
-  const router       = useRouter();
-  const pathname     = usePathname();
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
-  const current      = searchParams.get('category') ?? '';
+  const current = searchParams.get('category') ?? '';
 
   const setCategory = useCallback(
     (cat: string) => {
@@ -43,11 +43,11 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
             id={`category-filter-${value || 'all'}`}
             onClick={() => setCategory(value)}
             aria-pressed={active}
-            className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-1
-              ${active
+            className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-1 ${
+              active
                 ? 'border-brass bg-brass text-charcoal shadow-md shadow-brass/30'
                 : 'border-stone-200 bg-white text-stone-600 hover:border-yellow-300 hover:bg-brass/5 hover:text-brass'
-              }`}
+            }`}
           >
             {label}
           </button>

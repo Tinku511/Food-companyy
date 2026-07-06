@@ -49,71 +49,92 @@ export default function OrderHistoryPage() {
   };
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8 min-h-screen">
+    <div className="mx-auto min-h-screen max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="mb-10">
         <h1 className="font-display text-4xl font-bold text-foreground">Order History</h1>
-        <p className="mt-2 text-stone-500">Check the status of recent orders, manage returns, and download invoices.</p>
+        <p className="mt-2 text-stone-500">
+          Check the status of recent orders, manage returns, and download invoices.
+        </p>
       </div>
 
       {orders.length === 0 ? (
-        <div className="bg-white rounded-2xl shadow-sm border border-stone-200 py-20 text-center">
-          <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-background text-4xl mb-4">
-             📦
+        <div className="rounded-2xl border border-stone-200 bg-white py-20 text-center shadow-sm">
+          <div className="mb-4 inline-flex h-20 w-20 items-center justify-center rounded-full bg-background text-4xl">
+            📦
           </div>
-          <h2 className="font-display text-2xl font-bold text-foreground mb-2">No orders yet</h2>
-          <p className="text-stone-500 mb-6 max-w-xs mx-auto">When you place an order, it will appear here so you can track its progress.</p>
-          <Link href="/products" className="btn-primary">Start Shopping</Link>
+          <h2 className="mb-2 font-display text-2xl font-bold text-foreground">No orders yet</h2>
+          <p className="mx-auto mb-6 max-w-xs text-stone-500">
+            When you place an order, it will appear here so you can track its progress.
+          </p>
+          <Link href="/products" className="btn-primary">
+            Start Shopping
+          </Link>
         </div>
       ) : (
         <div className="space-y-8">
           {orders.map((order) => (
-            <div key={order.id} className="bg-white rounded-2xl shadow-sm border border-stone-200 overflow-hidden">
+            <div
+              key={order.id}
+              className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm"
+            >
               {/* Header */}
-              <div className="border-b border-stone-200 bg-background px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 flex-1 text-sm">
+              <div className="flex flex-col justify-between gap-4 border-b border-stone-200 bg-background px-6 py-4 sm:flex-row sm:items-center">
+                <div className="grid flex-1 grid-cols-2 gap-6 text-sm sm:grid-cols-4">
                   <div>
-                    <p className="text-stone-500 mb-1">Date placed</p>
+                    <p className="mb-1 text-stone-500">Date placed</p>
                     <p className="font-medium text-foreground">
-                      {new Date(order.createdAt).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      {new Date(order.createdAt).toLocaleDateString('en-IN', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      })}
                     </p>
                   </div>
                   <div>
-                    <p className="text-stone-500 mb-1">Total amount</p>
-                    <p className="font-medium text-foreground">₹{Number(order.totalAmount).toFixed(2)}</p>
+                    <p className="mb-1 text-stone-500">Total amount</p>
+                    <p className="font-medium text-foreground">
+                      ₹{Number(order.totalAmount).toFixed(2)}
+                    </p>
                   </div>
                   <div className="col-span-2 sm:col-span-2">
-                    <p className="text-stone-500 mb-1">Order #</p>
-                    <p className="font-medium text-foreground font-mono">{order.id}</p>
+                    <p className="mb-1 text-stone-500">Order #</p>
+                    <p className="font-mono font-medium text-foreground">{order.id}</p>
                   </div>
                 </div>
                 <div>
-                   <Link 
-                     href={`/track?id=${order.id}`}
-                     className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-charcoal shadow-sm hover:bg-background"
-                   >
-                     Track Order
-                   </Link>
+                  <Link
+                    href={`/track?id=${order.id}`}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-charcoal shadow-sm hover:bg-background"
+                  >
+                    Track Order
+                  </Link>
                 </div>
               </div>
 
               {/* Body */}
               <div className="p-6">
                 <div className="mb-6 flex items-center gap-3 border-b border-stone-100 pb-6">
-                   <div className="flex-1">
-                      <h3 className="font-bold text-foreground text-lg mb-1 flex items-center gap-3">
-                         Delivery Status
-                         <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${statusColors[order.fulfilmentStatus]}`}>
-                            {order.fulfilmentStatus}
-                         </span>
-                      </h3>
-                   </div>
+                  <div className="flex-1">
+                    <h3 className="mb-1 flex items-center gap-3 text-lg font-bold text-foreground">
+                      Delivery Status
+                      <span
+                        className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${statusColors[order.fulfilmentStatus]}`}
+                      >
+                        {order.fulfilmentStatus}
+                      </span>
+                    </h3>
+                  </div>
                 </div>
-                
+
                 <ul className="space-y-6">
                   {order.items.map((item, idx) => (
                     <li key={idx} className="flex gap-6">
                       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-xl border border-stone-200">
-                        <img src={item.product.imageUrl} alt={item.product.name} className="h-full w-full object-cover object-center" />
+                        <img
+                          src={item.product.imageUrl}
+                          alt={item.product.name}
+                          className="h-full w-full object-cover object-center"
+                        />
                       </div>
                       <div className="flex flex-1 flex-col">
                         <div className="flex justify-between text-base font-medium text-foreground">

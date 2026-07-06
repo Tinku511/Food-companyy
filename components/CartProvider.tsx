@@ -84,7 +84,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     if (existingItem) {
       newItems = newItems.map((i) =>
-        i.id === product.id ? { ...i, quantity: i.quantity + quantity } : i
+        i.id === product.id ? { ...i, quantity: i.quantity + quantity } : i,
       );
     } else {
       newItems.push({ ...product, quantity });
@@ -143,7 +143,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <CartContext.Provider value={{ items, cartCount, cartTotal, addToCart, removeFromCart, updateQuantity, clearCart, isLoading }}>
+    <CartContext.Provider
+      value={{
+        items,
+        cartCount,
+        cartTotal,
+        addToCart,
+        removeFromCart,
+        updateQuantity,
+        clearCart,
+        isLoading,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

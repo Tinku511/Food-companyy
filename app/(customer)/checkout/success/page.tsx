@@ -23,21 +23,32 @@ function CheckoutSuccessContent() {
             mounted ? 'scale-100 opacity-100' : 'scale-50 opacity-0'
           }`}
         >
-          <svg className="h-12 w-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+          <svg
+            className="h-12 w-12 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
 
-        <div className={`transition-all duration-700 delay-150 ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+        <div
+          className={`transition-all delay-150 duration-700 ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
+        >
           <h1 className="mb-3 font-display text-4xl font-bold text-foreground">Order Confirmed!</h1>
           <p className="mb-2 text-lg text-stone-600">Thank you for shopping with SesemeFoods.</p>
           <p className="mb-8 text-stone-500">
-            Your payment was successful and your order is being processed. We&apos;ll send you an email with delivery updates soon.
+            Your payment was successful and your order is being processed. We&apos;ll send you an
+            email with delivery updates soon.
           </p>
 
           {orderId && (
             <div className="mb-8 rounded-2xl border border-stone-200 bg-background p-5">
-              <p className="text-xs font-medium uppercase tracking-widest text-stone-400">Order ID</p>
+              <p className="text-xs font-medium uppercase tracking-widest text-stone-400">
+                Order ID
+              </p>
               <p className="mt-1 font-mono text-sm font-semibold text-foreground">{orderId}</p>
             </div>
           )}
@@ -45,14 +56,34 @@ function CheckoutSuccessContent() {
           {/* Payment security badges */}
           <div className="mb-8 flex items-center justify-center gap-6 text-xs text-stone-400">
             <span className="flex items-center gap-1.5">
-              <svg className="h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              <svg
+                className="h-4 w-4 text-green-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                />
               </svg>
               Payment verified by Razorpay
             </span>
             <span className="flex items-center gap-1.5">
-              <svg className="h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+              <svg
+                className="h-4 w-4 text-green-500"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                />
               </svg>
               SSL Encrypted
             </span>
@@ -97,4 +128,3 @@ export default function CheckoutSuccessPage() {
     </Suspense>
   );
 }
-
