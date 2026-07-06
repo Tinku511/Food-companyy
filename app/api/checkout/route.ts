@@ -27,7 +27,7 @@ export async function POST(req: Request) {
 
     const parsed = checkoutSchema.safeParse(body);
     if (!parsed.success) {
-      return NextResponse.json({ message: parsed.error.errors[0].message }, { status: 400 });
+      return NextResponse.json({ message: parsed.error.issues[0].message }, { status: 400 });
     }
 
     const { shippingAddress, notes } = parsed.data;
