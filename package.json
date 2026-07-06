@@ -21,7 +21,7 @@
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
     "@sendgrid/mail": "^8.1.6",
-    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
     "lru-cache": "^11.5.1",
     "next": "14.2.35",
     "next-auth": "^4.24.14",
@@ -35,7 +35,7 @@
   "devDependencies": {
     "@playwright/test": "^1.61.1",
     "@tailwindcss/typography": "^0.5.20",
-    "@types/bcrypt": "^6.0.0",
+    "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/pg": "^8.20.0",
     "@types/react": "^18",
