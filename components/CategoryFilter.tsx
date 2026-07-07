@@ -23,16 +23,16 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
       }
       router.push(`${pathname}?${params.toString()}`, { scroll: false });
     },
-    [router, pathname, searchParams],
+    [router, pathname, searchParams]
   );
 
-  const pills = [{ label: 'All', value: '' }, ...categories.map((c) => ({ label: c, value: c }))];
+  const pills = [{ label: 'All Products', value: '' }, ...categories.map((c) => ({ label: c, value: c }))];
 
   return (
     <div
       role="group"
       aria-label="Filter by category"
-      className="flex flex-wrap gap-2"
+      className="flex w-full flex-row gap-6 overflow-x-auto pb-4 lg:flex-col lg:gap-4 lg:overflow-visible lg:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       id="category-filter"
     >
       {pills.map(({ label, value }) => {
@@ -43,10 +43,10 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
             id={`category-filter-${value || 'all'}`}
             onClick={() => setCategory(value)}
             aria-pressed={active}
-            className={`rounded-full border px-4 py-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-1 ${
+            className={`whitespace-nowrap pb-2 text-left text-sm transition-all lg:pb-0 lg:pl-4 lg:text-base ${
               active
-                ? 'border-brass bg-brass text-charcoal shadow-md shadow-brass/30'
-                : 'border-stone-200 bg-white text-stone-600 hover:border-yellow-300 hover:bg-brass/5 hover:text-brass'
+                ? 'border-b-2 border-brass font-semibold text-content lg:border-b-0 lg:border-l-2'
+                : 'border-b-2 border-transparent font-medium text-muted hover:text-content lg:border-b-0 lg:border-l-2'
             }`}
           >
             {label}

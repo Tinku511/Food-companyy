@@ -3,6 +3,7 @@
 import { useState, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 type TrackedOrder = {
   id: string;
@@ -38,7 +39,6 @@ function TrackOrderContent() {
     setError('');
     setOrder(null);
 
-    // Update URL without reloading
     router.replace(`/track?id=${idToSearch}`);
 
     try {
@@ -58,200 +58,197 @@ function TrackOrderContent() {
     }
   }
 
-  const steps = ['PROCESSING', 'SHIPPED', 'DELIVERED'];
+  // Calculate mock estimated delivery (Order date + 3 days)
+  const estimatedDelivery = order ? new Date(new Date(order.createdAt).getTime() + 3 * 24 * 60 * 60 * 1000) : new Date();
 
   return (
-    <div className="mx-auto min-h-[70vh] max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-      <div className="mb-12 text-center">
-        <h1 className="font-display text-4xl font-bold text-foreground">Track Your Order</h1>
-        <p className="mt-2 text-stone-500">
-          Enter your order ID to see the latest updates on your delivery.
-        </p>
-      </div>
+    <div className="min-h-screen bg-background pb-32 pt-16 lg:pt-24">
+      <div className="mx-auto max-w-5xl px-6 lg:px-8">
+        
+        {/* ── HEADER ──────────────────────────────────────────────────────── */}
+        <div className="mb-12 text-center animate-slide-up">
+          <h1 className="font-display text-4xl font-light tracking-tight text-content lg:text-6xl">
+            Track Package
+          </h1>
+          <p className="mt-4 text-muted">
+            Enter your order tracking number to see live delivery updates.
+          </p>
+        </div>
 
-      {/* Search Box */}
-      <div className="card mx-auto mb-12 flex max-w-xl items-center p-2">
-        <div className="pl-4 pr-2 text-stone-400">
-          <svg
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+        {/* ── SEARCH BAR ──────────────────────────────────────────────────── */}
+        <div className="mx-auto mb-16 max-w-2xl animate-fade-in delay-100">
+          <div className="flex items-center rounded-full border border-border bg-surface p-2 shadow-xl shadow-stone-200/50 transition-shadow focus-within:shadow-2xl focus-within:shadow-brass/20">
+            <div className="pl-6 pr-2 text-muted">
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+              </svg>
+            </div>
+            <input
+              type="text"
+              placeholder="Enter tracking number (e.g. cm1a2b3...)"
+              value={orderId}
+              onChange={(e) => setOrderId(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+              className="flex-1 bg-transparent py-4 text-base font-medium text-content outline-none placeholder:font-normal placeholder:text-muted/60"
             />
-          </svg>
-        </div>
-        <input
-          type="text"
-          placeholder="e.g. cm1a2b3c4d5e6f7g8h9i0j"
-          value={orderId}
-          onChange={(e) => setOrderId(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-          className="flex-1 bg-transparent px-2 py-3 font-medium text-foreground outline-none"
-        />
-        <button
-          onClick={() => handleSearch()}
-          disabled={loading || !orderId.trim()}
-          className="rounded-xl bg-charcoal px-6 py-3 font-medium text-white transition hover:bg-charcoal/90 disabled:opacity-50"
-        >
-          {loading ? 'Searching...' : 'Track'}
-        </button>
-      </div>
-
-      {error && (
-        <div className="mx-auto max-w-xl rounded-xl border border-plum/20 bg-plum/10 p-4 text-center text-sm font-medium text-plum">
-          {error}
-        </div>
-      )}
-
-      {/* Results */}
-      {order && (
-        <div className="card overflow-hidden">
-          {/* Header */}
-          <div className="flex flex-col justify-between gap-4 border-b border-stone-100 bg-background p-6 sm:flex-row sm:items-center dark:border-surface-700">
-            <div>
-              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-stone-500">
-                Order Placed
-              </p>
-              <p className="font-medium text-charcoal">
-                {new Date(order.createdAt).toLocaleDateString('en-IN', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </p>
-            </div>
-            <div className="sm:text-right">
-              <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-stone-500">
-                Total Amount
-              </p>
-              <p className="font-medium text-charcoal">₹{Number(order.totalAmount).toFixed(2)}</p>
-            </div>
+            <button
+              onClick={() => handleSearch()}
+              disabled={loading || !orderId.trim()}
+              className="rounded-full bg-dark px-10 py-4 font-semibold text-white transition-all hover:bg-black disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              {loading ? (
+                <svg className="h-5 w-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={1.5} />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+              ) : (
+                'Track'
+              )}
+            </button>
           </div>
+        </div>
 
-          <div className="p-6 sm:p-10">
-            {order.fulfilmentStatus === 'CANCELLED' ? (
-              <div className="py-8 text-center">
-                <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
-                  <svg
-                    className="h-8 w-8 text-red-500"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </div>
-                <h3 className="font-display text-2xl font-bold text-foreground">Order Cancelled</h3>
-                <p className="mt-2 text-stone-500">
-                  This order has been cancelled and will not be delivered.
-                </p>
-              </div>
-            ) : (
-              <div>
-                <h3 className="mb-8 text-center font-display text-2xl font-bold text-foreground">
-                  Status:{' '}
-                  <span className="capitalize text-brass">
-                    {order.fulfilmentStatus.toLowerCase()}
-                  </span>
+        {error && (
+          <div className="mx-auto mb-16 max-w-2xl animate-scale-in rounded-2xl border border-red-200 bg-red-50 p-4 text-center text-sm font-medium text-red-600 shadow-sm">
+            {error}
+          </div>
+        )}
+
+        {/* ── RESULTS CARD ────────────────────────────────────────────────── */}
+        {order && (
+          <div className="animate-slide-up rounded-[2.5rem] border border-border bg-surface shadow-2xl shadow-stone-200/50 overflow-hidden">
+            
+            {/* Split Header */}
+            <div className="grid border-b border-border sm:grid-cols-2">
+              <div className="border-b border-border p-8 sm:border-b-0 sm:border-r">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted">Order Details</p>
+                <h3 className="font-display text-2xl font-light text-content mb-1">
+                  {new Date(order.createdAt).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                 </h3>
-
-                {/* Progress Bar */}
-                <div className="relative mx-auto mb-12 mt-12 max-w-lg">
-                  <div className="absolute left-0 top-1/2 h-1 w-full -translate-y-1/2 rounded-full bg-stone-100" />
-
-                  <div className="relative z-10 flex justify-between">
-                    {['Placed', 'Packed', 'Shipped', 'Delivered'].map((step, idx) => {
-                      let currentIndex = 0;
-                      if (order.fulfilmentStatus === 'PROCESSING') currentIndex = 1; // Packed is active
-                      if (order.fulfilmentStatus === 'SHIPPED') currentIndex = 2; // Shipped
-                      if (order.fulfilmentStatus === 'DELIVERED') currentIndex = 3; // Delivered
-
-                      const isCompleted = idx <= currentIndex;
-                      const isActive = idx === currentIndex;
-
-                      return (
-                        <div key={step} className="flex flex-col items-center">
-                          <div
-                            className={`relative z-10 flex h-8 w-8 items-center justify-center rounded-full border-2 bg-white transition-colors duration-500 ${isCompleted ? 'border-brass text-brass' : 'border-stone-200 text-stone-300'} ${isActive ? 'ring-4 ring-brass/20' : ''} `}
-                          >
-                            {isCompleted ? (
-                              <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
-                                <path
-                                  fillRule="evenodd"
-                                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                  clipRule="evenodd"
-                                />
-                              </svg>
-                            ) : (
-                              <div className="h-2 w-2 rounded-full bg-current" />
-                            )}
-                          </div>
-                          <p
-                            className={`absolute top-10 mt-3 whitespace-nowrap text-xs font-bold uppercase tracking-wider ${isCompleted ? 'text-charcoal' : 'text-stone-400'} `}
-                          >
-                            {step}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* Active track color overlay */}
-                  <div
-                    className="absolute left-0 top-1/2 h-1 -translate-y-1/2 rounded-full bg-brass transition-all duration-700 ease-in-out"
-                    style={{
-                      width:
-                        order.fulfilmentStatus === 'PROCESSING'
-                          ? '33.33%'
-                          : order.fulfilmentStatus === 'SHIPPED'
-                            ? '66.66%'
-                            : order.fulfilmentStatus === 'DELIVERED'
-                              ? '100%'
-                              : '0%',
-                    }}
-                  />
-                </div>
+                <p className="text-sm font-medium text-brass">Total: ₹{Number(order.totalAmount).toFixed(2)}</p>
               </div>
-            )}
-
-            {/* Items summary */}
-            <div className="mt-12">
-              <h4 className="mb-4 border-b border-stone-100 pb-2 text-sm font-bold uppercase tracking-widest text-foreground">
-                Order Items
-              </h4>
-              <ul className="space-y-4">
-                {order.items.map((item, i) => (
-                  <li key={i} className="flex items-center gap-4">
-                    <img
-                      src={item.productImage}
-                      alt={item.productName}
-                      className="h-16 w-16 rounded-xl border border-stone-100 object-cover"
-                    />
-                    <div className="flex-1">
-                      <p className="font-medium text-foreground">{item.productName}</p>
-                      <p className="text-sm text-stone-500">Qty: {item.quantity}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <div className="bg-background/30 p-8">
+                {order.fulfilmentStatus !== 'CANCELLED' && order.fulfilmentStatus !== 'DELIVERED' ? (
+                  <>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted">Estimated Delivery</p>
+                    <h3 className="font-display text-2xl font-medium text-content mb-1 text-gradient-brand">
+                      {estimatedDelivery.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                    </h3>
+                    <p className="text-sm text-muted">By 9:00 PM</p>
+                  </>
+                ) : order.fulfilmentStatus === 'DELIVERED' ? (
+                  <>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted">Delivery Status</p>
+                    <h3 className="font-display text-2xl font-medium text-success mb-1">
+                      Delivered Successfully
+                    </h3>
+                  </>
+                ) : (
+                  <>
+                    <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-muted">Delivery Status</p>
+                    <h3 className="font-display text-2xl font-medium text-red-500 mb-1">
+                      Order Cancelled
+                    </h3>
+                  </>
+                )}
+              </div>
             </div>
 
-            <div className="mt-10 text-center">
-              <Link href="/products" className="text-sm font-semibold text-brass hover:underline">
-                Continue Shopping →
-              </Link>
+            <div className="p-8 sm:p-16">
+              
+              {order.fulfilmentStatus === 'CANCELLED' ? (
+                <div className="py-12 text-center">
+                  <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-red-50">
+                    <svg className="h-10 w-10 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </div>
+                  <h3 className="font-display text-3xl font-light text-content">Order Cancelled</h3>
+                  <p className="mt-4 text-muted">This order has been cancelled and will not be delivered.</p>
+                </div>
+              ) : (
+                <div className="py-8">
+                  {/* Modern Animated Progress Tracker */}
+                  <div className="relative mx-auto max-w-3xl">
+                    {/* Background Track */}
+                    <div className="absolute left-0 top-1/2 h-1.5 w-full -translate-y-1/2 rounded-full bg-border" />
+
+                    {/* Active Track */}
+                    <div
+                      className="absolute left-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-brass transition-all duration-1000 ease-out"
+                      style={{
+                        width:
+                          order.fulfilmentStatus === 'PROCESSING' ? '33.33%' : 
+                          order.fulfilmentStatus === 'SHIPPED' ? '66.66%' : 
+                          order.fulfilmentStatus === 'DELIVERED' ? '100%' : '0%',
+                      }}
+                    />
+
+                    {/* Nodes */}
+                    <div className="relative z-10 flex justify-between">
+                      {['Order Placed', 'Processing', 'In Transit', 'Delivered'].map((step, idx) => {
+                        let currentIndex = 0;
+                        if (order.fulfilmentStatus === 'PROCESSING') currentIndex = 1;
+                        if (order.fulfilmentStatus === 'SHIPPED') currentIndex = 2;
+                        if (order.fulfilmentStatus === 'DELIVERED') currentIndex = 3;
+
+                        const isCompleted = idx <= currentIndex;
+                        const isActive = idx === currentIndex;
+
+                        return (
+                          <div key={step} className="flex flex-col items-center">
+                            <div
+                              className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-full border-4 transition-all duration-700 bg-white ${
+                                isCompleted ? 'border-brass text-brass' : 'border-border text-transparent'
+                              } ${isActive && order.fulfilmentStatus !== 'DELIVERED' ? 'animate-pulse-ring' : ''}`}
+                            >
+                              {isCompleted ? (
+                                <svg className="h-5 w-5 animate-scale-in text-brass" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              ) : (
+                                <div className="h-3 w-3 rounded-full bg-border" />
+                              )}
+                            </div>
+                            <p className={`absolute top-14 mt-2 text-center text-xs font-bold uppercase tracking-widest ${isCompleted ? 'text-content' : 'text-muted'}`}>
+                              {step}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Items Summary */}
+              <div className="mt-24 rounded-3xl border border-border bg-background/50 p-8">
+                <h4 className="mb-6 font-display text-xl font-light text-content">Items in this shipment</h4>
+                <ul className="grid gap-6 sm:grid-cols-2">
+                  {order.items.map((item, i) => (
+                    <li key={i} className="flex items-center gap-6 rounded-2xl bg-surface p-4 shadow-sm border border-border">
+                      <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-xl bg-background border border-border">
+                        <Image
+                          src={item.productImage}
+                          alt={item.productName}
+                          fill
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <p className="line-clamp-2 font-display text-lg font-medium text-content">{item.productName}</p>
+                        <p className="mt-1 text-sm text-muted">Quantity: {item.quantity}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
             </div>
           </div>
-        </div>
-      )}
+        )}
+
+      </div>
     </div>
   );
 }
@@ -260,7 +257,7 @@ export default function TrackOrderPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[50vh] items-center justify-center">
+        <div className="flex min-h-screen items-center justify-center bg-background">
           <div className="h-8 w-8 animate-spin rounded-full border-2 border-brass border-t-transparent" />
         </div>
       }

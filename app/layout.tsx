@@ -3,7 +3,7 @@ import localFont from 'next/font/local';
 import './globals.css';
 import { Providers } from '@/components/Providers';
 
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Inter, Fraunces } from 'next/font/google';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -11,10 +11,10 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-const playfair = Playfair_Display({
+const fraunces = Fraunces({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-playfair',
+  variable: '--font-fraunces',
 });
 
 export const metadata: Metadata = {
@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${playfair.variable} font-sans leading-relaxed antialiased`}
+        className={`${inter.variable} ${fraunces.variable} font-sans leading-relaxed antialiased bg-background text-content`}
       >
         <Providers>{children}</Providers>
       </body>

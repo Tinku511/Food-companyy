@@ -17,7 +17,7 @@ export default function AboutPage() {
           <h1 className="font-display text-4xl font-bold leading-tight text-charcoal sm:text-5xl md:text-6xl">
             Passionate About Pure, Uncompromising Flavor.
           </h1>
-          <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-stone-600">
+          <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-content">
             Founded with a simple mission: to bring the world's most vibrant and authentic flavors
             directly to your kitchen. We believe that great food starts with exceptional
             ingredients, sourced ethically and prepared with care.
@@ -62,7 +62,7 @@ export default function AboutPage() {
             <h2 className="font-display text-3xl font-bold text-charcoal sm:text-4xl">
               The Seseme Standard
             </h2>
-            <div className="mt-8 space-y-8 text-stone-600">
+            <div className="mt-8 space-y-8 text-content">
               <p className="leading-relaxed">
                 We travel the globe to build direct relationships with farmers and artisans who
                 share our obsession with quality. From the rolling hills of Tuscany to the spice

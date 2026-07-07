@@ -95,42 +95,44 @@ export default function EditProductPage() {
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8">
+    <div className="mx-auto max-w-3xl space-y-8 animate-fade-in pb-20">
+      
       {/* Header */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
         <Link
           href="/dashboard/products"
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-stone-200 bg-white text-stone-500 transition hover:border-stone-300 hover:text-charcoal"
+          className="flex h-12 w-12 items-center justify-center rounded-full border border-border bg-surface text-muted transition-colors hover:border-brass hover:text-brass shadow-sm"
         >
-          <svg
-            className="h-5 w-5"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-          >
+          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
           </svg>
         </Link>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-brass">Products</p>
-          <h1 className="mt-1 font-display text-2xl font-bold text-charcoal">Edit Product</h1>
+          <p className="text-xs font-semibold uppercase tracking-widest text-brass">Catalogue</p>
+          <h1 className="mt-1 font-display text-3xl font-bold text-content tracking-tight">Edit Product</h1>
         </div>
       </div>
 
-      {/* Form */}
-      <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
-        <form onSubmit={handleSubmit} className="p-6 sm:p-8">
+      {/* Form Container */}
+      <div className="rounded-[2.5rem] border border-border bg-surface shadow-xl shadow-stone-200/50 overflow-hidden">
+        <form onSubmit={handleSubmit} className="p-8 sm:p-12">
+          
           {error && (
-            <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-600">
-              {error}
+            <div className="mb-8 rounded-2xl border border-red-200 bg-red-50 p-5 text-sm font-medium text-red-600 animate-scale-in">
+              <div className="flex items-center gap-3">
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span>{error}</span>
+              </div>
             </div>
           )}
 
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          <div className="space-y-8">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+              
               <div className="sm:col-span-2">
-                <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-stone-700">
+                <label htmlFor="name" className="mb-2 block text-sm font-semibold text-content uppercase tracking-widest">
                   Product Name
                 </label>
                 <input
@@ -140,30 +142,27 @@ export default function EditProductPage() {
                   required
                   value={form.name}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-4 text-base font-medium text-content outline-none transition-all placeholder:font-normal placeholder:text-muted focus:border-brass focus:ring-2 focus:ring-brass/20"
                 />
               </div>
 
               <div className="sm:col-span-2">
-                <label
-                  htmlFor="description"
-                  className="mb-1.5 block text-sm font-medium text-stone-700"
-                >
+                <label htmlFor="description" className="mb-2 block text-sm font-semibold text-content uppercase tracking-widest">
                   Description
                 </label>
                 <textarea
                   id="description"
                   name="description"
-                  rows={3}
+                  rows={4}
                   required
                   value={form.description}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-4 text-base font-medium text-content outline-none transition-all placeholder:font-normal placeholder:text-muted focus:border-brass focus:ring-2 focus:ring-brass/20 resize-none"
                 />
               </div>
 
               <div>
-                <label htmlFor="price" className="mb-1.5 block text-sm font-medium text-stone-700">
+                <label htmlFor="price" className="mb-2 block text-sm font-semibold text-content uppercase tracking-widest">
                   Price (₹)
                 </label>
                 <input
@@ -175,12 +174,12 @@ export default function EditProductPage() {
                   required
                   value={form.price}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-4 text-base font-medium text-content outline-none transition-all placeholder:font-normal placeholder:text-muted focus:border-brass focus:ring-2 focus:ring-brass/20"
                 />
               </div>
 
               <div>
-                <label htmlFor="stock" className="mb-1.5 block text-sm font-medium text-stone-700">
+                <label htmlFor="stock" className="mb-2 block text-sm font-semibold text-content uppercase tracking-widest">
                   Stock Quantity
                 </label>
                 <input
@@ -191,38 +190,39 @@ export default function EditProductPage() {
                   required
                   value={form.stock}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-4 text-base font-medium text-content outline-none transition-all placeholder:font-normal placeholder:text-muted focus:border-brass focus:ring-2 focus:ring-brass/20"
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor="category"
-                  className="mb-1.5 block text-sm font-medium text-stone-700"
-                >
+              <div className="sm:col-span-2">
+                <label htmlFor="category" className="mb-2 block text-sm font-semibold text-content uppercase tracking-widest">
                   Category
                 </label>
-                <select
-                  id="category"
-                  name="category"
-                  required
-                  value={form.category}
-                  onChange={handleChange}
-                  className="form-input"
-                >
-                  <option value="">Select a category</option>
-                  <option value="Snacks">Snacks</option>
-                  <option value="Beverages">Beverages</option>
-                  <option value="Condiments">Condiments</option>
-                  <option value="Pantry">Pantry</option>
-                </select>
+                <div className="relative">
+                  <select
+                    id="category"
+                    name="category"
+                    required
+                    value={form.category}
+                    onChange={handleChange}
+                    className="w-full appearance-none rounded-2xl border border-border bg-background px-4 py-4 pr-12 text-base font-medium text-content outline-none transition-all focus:border-brass focus:ring-2 focus:ring-brass/20"
+                  >
+                    <option value="" disabled>Select a category</option>
+                    <option value="Snacks">Snacks</option>
+                    <option value="Beverages">Beverages</option>
+                    <option value="Condiments">Condiments</option>
+                    <option value="Pantry">Pantry</option>
+                  </select>
+                  <div className="pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-muted">
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <label
-                  htmlFor="imageUrl"
-                  className="mb-1.5 block text-sm font-medium text-stone-700"
-                >
+              <div className="sm:col-span-2">
+                <label htmlFor="imageUrl" className="mb-2 block text-sm font-semibold text-content uppercase tracking-widest">
                   Image URL
                 </label>
                 <input
@@ -232,40 +232,61 @@ export default function EditProductPage() {
                   required
                   value={form.imageUrl}
                   onChange={handleChange}
-                  className="form-input"
+                  className="w-full rounded-2xl border border-border bg-background px-4 py-4 text-base font-medium text-content outline-none transition-all placeholder:font-normal placeholder:text-muted focus:border-brass focus:ring-2 focus:ring-brass/20"
                 />
               </div>
 
-              <div className="flex items-center gap-3 pt-4 sm:col-span-2">
-                <input
-                  id="isActive"
-                  name="isActive"
-                  type="checkbox"
-                  checked={form.isActive}
-                  onChange={handleChange}
-                  className="h-5 w-5 rounded border-stone-300 text-brass focus:ring-brass/20"
-                />
-                <label htmlFor="isActive" className="text-sm font-medium text-stone-700">
+              <div className="flex items-center gap-4 pt-6 sm:col-span-2">
+                <div className="relative flex h-6 items-center">
+                  <input
+                    id="isActive"
+                    name="isActive"
+                    type="checkbox"
+                    checked={form.isActive}
+                    onChange={handleChange}
+                    className="peer h-6 w-6 cursor-pointer appearance-none rounded-md border-2 border-border bg-background transition-all checked:border-brass checked:bg-brass hover:border-brass focus:outline-none focus:ring-2 focus:ring-brass/20 focus:ring-offset-2"
+                  />
+                  <svg
+                    className="pointer-events-none absolute left-1/2 top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 transition-opacity peer-checked:opacity-100"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={3}
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <label htmlFor="isActive" className="cursor-pointer text-sm font-semibold text-content">
                   Active (visible to customers)
                 </label>
               </div>
             </div>
           </div>
 
-          <div className="mt-8 flex items-center gap-4 border-t border-stone-100 pt-6">
+          <div className="mt-12 flex flex-col-reverse items-center gap-4 border-t border-border pt-8 sm:flex-row sm:justify-end">
             <button
               type="button"
               onClick={() => router.push('/dashboard/products')}
-              className="rounded-xl border border-stone-200 px-6 py-2.5 text-sm font-medium text-stone-600 transition hover:border-stone-300"
+              className="btn-secondary w-full sm:w-auto px-8"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="rounded-lg bg-charcoal px-6 py-2 text-sm font-medium text-white transition hover:bg-charcoal/90 disabled:opacity-60"
+              className="btn-primary w-full sm:w-auto px-10 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {loading ? 'Saving...' : 'Save Changes'}
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <svg className="h-5 w-5 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={4}></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Saving...
+                </span>
+              ) : (
+                'Save Changes'
+              )}
             </button>
           </div>
         </form>

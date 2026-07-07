@@ -37,24 +37,24 @@ function CheckoutSuccessContent() {
         <div
           className={`transition-all delay-150 duration-700 ${mounted ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}
         >
-          <h1 className="mb-3 font-display text-4xl font-bold text-foreground">Order Confirmed!</h1>
-          <p className="mb-2 text-lg text-stone-600">Thank you for shopping with SesemeFoods.</p>
-          <p className="mb-8 text-stone-500">
+          <h1 className="mb-3 font-display text-4xl font-bold text-content">Order Confirmed!</h1>
+          <p className="mb-2 text-lg text-content">Thank you for shopping with SesemeFoods.</p>
+          <p className="mb-8 text-muted">
             Your payment was successful and your order is being processed. We&apos;ll send you an
             email with delivery updates soon.
           </p>
 
           {orderId && (
-            <div className="mb-8 rounded-2xl border border-stone-200 bg-background p-5">
-              <p className="text-xs font-medium uppercase tracking-widest text-stone-400">
+            <div className="mb-8 rounded-2xl border border-border bg-surface p-5 shadow-sm">
+              <p className="text-xs font-medium uppercase tracking-widest text-muted">
                 Order ID
               </p>
-              <p className="mt-1 font-mono text-sm font-semibold text-foreground">{orderId}</p>
+              <p className="mt-1 font-mono text-sm font-semibold text-content">{orderId}</p>
             </div>
           )}
 
           {/* Payment security badges */}
-          <div className="mb-8 flex items-center justify-center gap-6 text-xs text-stone-400">
+          <div className="mb-8 flex items-center justify-center gap-6 text-xs text-muted">
             <span className="flex items-center gap-1.5">
               <svg
                 className="h-4 w-4 text-green-500"
@@ -90,20 +90,20 @@ function CheckoutSuccessContent() {
           </div>
 
           <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            <Link href="/products" className="btn-primary">
+            <Link href="/products" className="btn-primary px-6 py-3 text-sm">
               Continue Shopping
             </Link>
             {orderId && (
               <Link
                 href={`/track?id=${orderId}`}
-                className="rounded-full border border-stone-200 px-6 py-3 text-sm font-medium text-stone-600 transition hover:border-stone-300 hover:text-foreground"
+                className="btn-secondary px-6 py-3 text-sm"
               >
                 Track Order →
               </Link>
             )}
             <Link
               href="/"
-              className="rounded-full border border-stone-200 px-6 py-3 text-sm font-medium text-stone-600 transition hover:border-stone-300 hover:text-foreground"
+              className="btn-secondary px-6 py-3 text-sm"
             >
               Go to Home
             </Link>

@@ -30,189 +30,142 @@ export default function AdminProductsPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 animate-fade-in">
+      
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-brass">Catalogue</p>
-          <h1 className="mt-1 font-display text-3xl font-bold text-charcoal">Products</h1>
-          <p className="mt-1 text-sm text-stone-500">
-            {products.length} products in your catalogue
-          </p>
+          <h1 className="font-display text-3xl font-bold text-content tracking-tight">Products</h1>
+          <p className="mt-1 text-sm text-muted">{products.length} products in your catalogue.</p>
         </div>
-        <Link
-          href="/dashboard/products/new"
-          className="flex items-center gap-2 rounded-lg bg-charcoal px-4 py-2 text-sm font-medium text-white transition hover:bg-charcoal/90"
-        >
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-          >
+        <Link href="/dashboard/products/new" className="btn-secondary py-2 px-4 text-xs font-semibold shadow-sm flex items-center gap-2">
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
           </svg>
           Add Product
         </Link>
       </div>
 
-      {/* Table */}
-      <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
+      {/* Table Container */}
+      <div className="rounded-2xl border border-border bg-surface shadow-sm overflow-hidden">
         {loading ? (
-          <div className="flex h-48 items-center justify-center">
+          <div className="flex h-64 items-center justify-center">
             <div className="h-8 w-8 animate-spin rounded-full border-2 border-brass border-t-transparent" />
           </div>
         ) : products.length === 0 ? (
-          <div className="py-20 text-center text-stone-400">
-            <p className="mb-4 text-4xl">📦</p>
-            <p className="font-medium">No products yet.</p>
-            <Link
-              href="/dashboard/products/new"
-              className="mt-3 inline-block text-sm text-brass hover:underline"
-            >
-              Add your first product →
-            </Link>
+          <div className="py-24 text-center text-muted">
+            <svg className="mx-auto mb-4 h-12 w-12 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
+            <p className="font-medium text-content">No products found.</p>
           </div>
         ) : (
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-stone-100 bg-background text-left text-xs font-semibold uppercase tracking-wider text-stone-400">
-                <th className="px-5 py-3">Product</th>
-                <th className="px-5 py-3">Category</th>
-                <th className="px-5 py-3">Price</th>
-                <th className="px-5 py-3">Stock</th>
-                <th className="px-5 py-3">Status</th>
-                <th className="px-5 py-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-stone-100">
-              {products.map((product) => (
-                <tr key={product.id} className="hover:bg-background/60 transition">
-                  <td className="px-5 py-3.5">
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={product.imageUrl}
-                        alt={product.name}
-                        className="h-10 w-10 rounded-xl object-cover"
-                      />
-                      <div>
-                        <p className="font-medium text-charcoal">{product.name}</p>
-                        <p className="line-clamp-1 text-xs text-stone-400">{product.description}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="px-5 py-3.5">
-                    <span className="rounded-full bg-stone-100 px-2.5 py-0.5 text-xs font-medium text-stone-600">
-                      {product.category}
-                    </span>
-                  </td>
-                  <td className="px-5 py-3.5 font-medium text-charcoal">
-                    ₹{Number(product.price).toFixed(2)}
-                  </td>
-                  <td className="px-5 py-3.5">
-                    <span
-                      className={`font-medium ${Number(product.stock) === 0 ? 'text-red-500' : 'text-charcoal'}`}
-                    >
-                      {product.stock}
-                    </span>
-                  </td>
-                  <td className="px-5 py-3.5">
-                    {product.isActive ? (
-                      <span className="inline-flex rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">
-                        Active
-                      </span>
-                    ) : (
-                      <span className="inline-flex rounded-full bg-stone-100 px-2.5 py-0.5 text-xs font-semibold text-stone-500">
-                        Inactive
-                      </span>
-                    )}
-                  </td>
-                  <td className="px-5 py-3.5">
-                    <div className="flex items-center justify-end gap-2">
-                      <Link
-                        href={`/dashboard/products/${product.id}/edit`}
-                        className="flex items-center gap-1 rounded-lg border border-stone-200 px-3 py-1.5 text-xs font-medium text-stone-600 transition hover:border-brass hover:text-brass"
-                      >
-                        <svg
-                          className="h-3.5 w-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={1.5}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                          />
-                        </svg>
-                        Edit
-                      </Link>
-                      <button
-                        onClick={() => setConfirmDelete(product.id)}
-                        className="flex items-center gap-1 rounded-lg border border-stone-200 px-3 py-1.5 text-xs font-medium text-stone-600 transition hover:border-red-300 hover:text-red-500"
-                      >
-                        <svg
-                          className="h-3.5 w-3.5"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
-                          strokeWidth={1.5}
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                          />
-                        </svg>
-                        Delete
-                      </button>
-                    </div>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border bg-background/50 text-left text-[10px] font-bold uppercase tracking-widest text-muted">
+                  <th className="px-6 py-4">Product</th>
+                  <th className="px-6 py-4">Category</th>
+                  <th className="px-6 py-4">Price</th>
+                  <th className="px-6 py-4">Stock</th>
+                  <th className="px-6 py-4">Status</th>
+                  <th className="px-6 py-4 text-right">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {products.map((product) => (
+                  <tr key={product.id} className="transition-colors hover:bg-background/50">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-4">
+                        <div className="relative h-12 w-12 shrink-0 rounded-lg border border-border bg-background overflow-hidden">
+                          <img src={product.imageUrl} alt={product.name} className="h-full w-full object-cover" />
+                        </div>
+                        <div>
+                          <p className="font-medium text-content">{product.name}</p>
+                          <p className="line-clamp-1 text-xs text-muted max-w-[150px]">{product.description}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="rounded-md bg-background px-2.5 py-1 text-[10px] font-bold uppercase tracking-widest text-muted border border-border">
+                        {product.category}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 font-mono text-xs font-medium text-content">
+                      ₹{Number(product.price).toFixed(2)}
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className={`font-mono text-xs font-medium ${Number(product.stock) === 0 ? 'text-red-500' : 'text-content'}`}>
+                        {product.stock}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      {product.isActive ? (
+                        <span className="inline-flex rounded-md bg-green-50 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-green-700">
+                          Active
+                        </span>
+                      ) : (
+                        <span className="inline-flex rounded-md bg-stone-100 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-stone-500">
+                          Inactive
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-end gap-3">
+                        <Link
+                          href={`/dashboard/products/${product.id}/edit`}
+                          className="flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-[11px] font-semibold text-content shadow-sm transition-colors hover:bg-background hover:text-brass hover:border-brass/30"
+                        >
+                          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                          </svg>
+                          Edit
+                        </Link>
+                        <button
+                          onClick={() => setConfirmDelete(product.id)}
+                          className="flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-[11px] font-semibold text-content shadow-sm transition-colors hover:bg-background hover:text-red-500 hover:border-red-200"
+                        >
+                          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
-      {/* Delete confirmation modal */}
+      {/* Delete Confirmation Modal */}
       {confirmDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="mx-4 w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
-              <svg
-                className="h-6 w-6 text-red-500"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                />
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm animate-fade-in">
+          <div className="mx-4 w-full max-w-sm rounded-[2rem] bg-surface p-8 shadow-2xl animate-scale-in border border-border">
+            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-red-50 border border-red-100">
+              <svg className="h-7 w-7 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </div>
-            <h3 className="mb-1 font-display text-lg font-bold text-charcoal">Delete Product?</h3>
-            <p className="mb-6 text-sm text-stone-500">
-              This action cannot be undone. The product will be permanently removed.
+            <h3 className="mb-2 font-display text-xl font-medium text-content">Delete Product?</h3>
+            <p className="mb-8 text-sm text-muted">
+              This action cannot be undone. The product will be permanently removed from your catalogue.
             </p>
-            <div className="flex gap-3">
+            <div className="flex gap-4">
               <button
                 onClick={() => setConfirmDelete(null)}
-                className="flex-1 rounded-xl border border-stone-200 py-2.5 text-sm font-medium text-stone-600 transition hover:border-stone-300"
+                className="flex-1 rounded-xl border border-border bg-background py-3 text-sm font-semibold text-content transition-colors hover:bg-stone-200/50"
               >
                 Cancel
               </button>
               <button
                 onClick={() => handleDelete(confirmDelete)}
                 disabled={deletingId === confirmDelete}
-                className="flex-1 rounded-xl bg-red-500 py-2.5 text-sm font-semibold text-white transition hover:bg-red-600 disabled:opacity-60"
+                className="flex-1 rounded-xl bg-red-500 py-3 text-sm font-semibold text-white transition-colors hover:bg-red-600 disabled:opacity-60"
               >
-                {deletingId === confirmDelete ? 'Deleting…' : 'Delete'}
+                {deletingId === confirmDelete ? 'Deleting...' : 'Delete Product'}
               </button>
             </div>
           </div>

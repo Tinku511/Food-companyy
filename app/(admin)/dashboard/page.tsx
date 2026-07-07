@@ -43,10 +43,10 @@ async function getStats() {
 }
 
 const statusColors: Record<string, string> = {
-  PROCESSING: 'bg-brass/10 text-brass border border-brass/20',
-  SHIPPED: 'bg-blue-50 text-blue-700 border border-blue-200',
-  DELIVERED: 'bg-green-50 text-green-700 border border-green-200',
-  CANCELLED: 'bg-plum/10 text-plum border border-plum/20',
+  PROCESSING: 'bg-brass/10 text-brass',
+  SHIPPED: 'bg-blue-50 text-blue-700',
+  DELIVERED: 'bg-green-50 text-green-700',
+  CANCELLED: 'bg-red-50 text-red-600',
 };
 
 export const dynamic = 'force-dynamic';
@@ -55,202 +55,139 @@ export default async function DashboardPage() {
   const stats = await getStats();
 
   return (
-    <div className="space-y-10">
-      {/* Header */}
-      <div>
-        <p className="text-xs font-semibold uppercase tracking-widest text-brass">Admin</p>
-        <h1 className="mt-1 font-display text-3xl font-bold text-charcoal">Sales Overview</h1>
-        <p className="mt-1 text-sm text-stone-500">
-          Welcome back! Here's what's happening in your store today.
-        </p>
+    <div className="space-y-10 animate-fade-in">
+      
+      {/* ── HEADER ──────────────────────────────────────────────────────── */}
+      <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+        <div>
+          <h1 className="font-display text-3xl font-bold text-content tracking-tight">Overview</h1>
+          <p className="mt-1 text-sm text-muted">Monitor your store's performance and recent activity.</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <Link href="/dashboard/products/new" className="btn-secondary py-2 px-4 text-xs font-semibold shadow-sm">
+            Add Product
+          </Link>
+        </div>
       </div>
 
-      {/* Stat Cards */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+      {/* ── STAT CARDS (Stripe Style) ───────────────────────────────────── */}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
         {[
           {
-            label: 'Total Revenue',
+            label: 'Gross Revenue',
             value: `₹${stats.totalRevenue.toLocaleString('en-IN', { minimumFractionDigits: 2 })}`,
-            icon: (
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            ),
-            iconBg: 'bg-stone-100',
-            textColor: 'text-charcoal',
+            trend: '+12.5%',
+            isPositive: true
           },
           {
             label: 'Total Orders',
             value: stats.totalOrders.toLocaleString(),
-            icon: (
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                />
-              </svg>
-            ),
-            iconBg: 'bg-stone-100',
-            textColor: 'text-charcoal',
+            trend: '+8.2%',
+            isPositive: true
           },
           {
             label: 'Active Products',
             value: stats.totalProducts.toLocaleString(),
-            icon: (
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                />
-              </svg>
-            ),
-            iconBg: 'bg-stone-100',
-            textColor: 'text-charcoal',
+            trend: 'Stable',
+            isPositive: true
           },
         ].map((stat) => (
-          <div
-            key={stat.label}
-            className="flex items-center gap-4 border-b border-stone-200 bg-transparent py-5"
-          >
-            <div
-              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-stone-200 bg-white ${stat.textColor}`}
-            >
-              {stat.icon}
-            </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-stone-500">
-                {stat.label}
-              </p>
-              <p className={`mt-0.5 font-display text-2xl font-bold ${stat.textColor}`}>
-                {stat.value}
-              </p>
+          <div key={stat.label} className="rounded-2xl border border-border bg-surface p-6 shadow-sm transition-shadow hover:shadow-md">
+            <p className="text-xs font-semibold uppercase tracking-widest text-muted">{stat.label}</p>
+            <div className="mt-3 flex items-baseline gap-3">
+              <p className="font-display text-3xl font-bold text-content">{stat.value}</p>
+              <span className={`text-xs font-medium ${stat.isPositive ? 'text-green-600' : 'text-muted'}`}>
+                {stat.trend}
+              </span>
             </div>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 gap-8 xl:grid-cols-3">
-        {/* Recent Orders */}
+        
+        {/* ── RECENT ORDERS TABLE ───────────────────────────────────────── */}
         <div className="xl:col-span-2">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-display text-lg font-bold text-charcoal">Recent Orders</h2>
-            <Link
-              href="/dashboard/orders"
-              className="text-xs font-semibold text-brass hover:underline"
-            >
-              View all →
-            </Link>
-          </div>
-          <div className="overflow-x-auto border-t border-stone-200">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b-2 border-stone-200 bg-transparent text-left text-xs font-semibold uppercase tracking-widest text-stone-500">
-                  <th className="px-2 py-4">Customer</th>
-                  <th className="px-2 py-4">Amount</th>
-                  <th className="px-2 py-4">Status</th>
-                  <th className="px-2 py-4 text-right">Date</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-stone-100">
-                {stats.recentOrders.map((order) => (
-                  <tr key={order.id} className="transition hover:bg-stone-50/50">
-                    <td className="px-2 py-4 font-medium text-charcoal">{order.user.name}</td>
-                    <td className="px-2 py-4 font-mono text-stone-600">
-                      ₹{Number(order.totalAmount).toFixed(2)}
-                    </td>
-                    <td className="px-2 py-4">
-                      <span
-                        className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest ${statusColors[order.fulfilmentStatus] ?? 'bg-stone-100 text-stone-500'}`}
-                      >
-                        {order.fulfilmentStatus}
-                      </span>
-                    </td>
-                    <td className="px-2 py-4 text-right font-mono text-xs text-stone-400">
-                      {new Date(order.createdAt).toLocaleDateString('en-IN', {
-                        day: 'numeric',
-                        month: 'short',
-                      })}
-                    </td>
+          <div className="rounded-2xl border border-border bg-surface shadow-sm overflow-hidden">
+            <div className="flex items-center justify-between border-b border-border bg-background/50 px-6 py-4">
+              <h2 className="font-medium text-content">Recent Orders</h2>
+              <Link href="/dashboard/orders" className="text-xs font-semibold text-brass hover:underline">
+                View all
+              </Link>
+            </div>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border text-left text-[10px] font-bold uppercase tracking-widest text-muted">
+                    <th className="px-6 py-3">Customer</th>
+                    <th className="px-6 py-3">Amount</th>
+                    <th className="px-6 py-3">Status</th>
+                    <th className="px-6 py-3 text-right">Date</th>
                   </tr>
-                ))}
-                {stats.recentOrders.length === 0 && (
-                  <tr>
-                    <td colSpan={4} className="px-5 py-8 text-center text-stone-400">
-                      No orders yet
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {stats.recentOrders.map((order) => (
+                    <tr key={order.id} className="transition-colors hover:bg-background/50">
+                      <td className="px-6 py-4 font-medium text-content">{order.user.name}</td>
+                      <td className="px-6 py-4 font-mono text-muted text-xs">
+                        ₹{Number(order.totalAmount).toFixed(2)}
+                      </td>
+                      <td className="px-6 py-4">
+                        <span className={`inline-flex items-center rounded-md px-2 py-1 text-[10px] font-bold uppercase tracking-wider ${statusColors[order.fulfilmentStatus] ?? 'bg-stone-100 text-stone-500'}`}>
+                          {order.fulfilmentStatus}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 text-right text-xs font-medium text-muted">
+                        {new Date(order.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                      </td>
+                    </tr>
+                  ))}
+                  {stats.recentOrders.length === 0 && (
+                    <tr>
+                      <td colSpan={4} className="px-6 py-12 text-center text-sm text-muted">
+                        No orders yet
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
-        {/* Top Products */}
+        {/* ── TOP PRODUCTS LIST ─────────────────────────────────────────── */}
         <div>
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="font-display text-lg font-bold text-charcoal">Top Products</h2>
-            <Link
-              href="/dashboard/products"
-              className="text-xs font-semibold text-brass hover:underline"
-            >
-              Manage →
-            </Link>
-          </div>
-          <div className="border-t border-stone-200">
-            <ul className="divide-y divide-stone-100">
+          <div className="rounded-2xl border border-border bg-surface shadow-sm overflow-hidden">
+            <div className="flex items-center justify-between border-b border-border bg-background/50 px-6 py-4">
+              <h2 className="font-medium text-content">Top Products</h2>
+              <Link href="/dashboard/products" className="text-xs font-semibold text-brass hover:underline">
+                Manage
+              </Link>
+            </div>
+            
+            <ul className="divide-y divide-border">
               {stats.topProducts.map((tp, idx) => (
-                <li
-                  key={tp.productId}
-                  className="flex items-center gap-4 py-4 transition hover:bg-stone-50/50"
-                >
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center font-mono text-[10px] font-bold text-stone-400">
-                    0{idx + 1}
-                  </span>
+                <li key={tp.productId} className="flex items-center gap-4 px-6 py-4 transition-colors hover:bg-background/50">
+                  <span className="font-mono text-xs font-bold text-muted">0{idx + 1}</span>
                   {tp.product?.imageUrl && (
-                    <img
-                      src={tp.product.imageUrl}
-                      alt={tp.product.name}
-                      className="h-10 w-10 rounded-md border border-stone-200 object-cover"
-                    />
+                    <img src={tp.product.imageUrl} alt={tp.product.name} className="h-10 w-10 rounded-lg border border-border object-cover bg-background" />
                   )}
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-semibold text-charcoal">
+                    <p className="truncate text-sm font-semibold text-content">
                       {tp.product?.name ?? 'Unknown'}
                     </p>
-                    <p className="text-xs text-stone-500">{tp._sum.quantity} units sold</p>
+                    <p className="text-xs text-muted mt-0.5">{tp._sum.quantity} units sold</p>
                   </div>
                 </li>
               ))}
               {stats.topProducts.length === 0 && (
-                <li className="py-8 text-center text-sm text-stone-400">No sales data yet</li>
+                <li className="px-6 py-12 text-center text-sm text-muted">No sales data yet</li>
               )}
             </ul>
           </div>
         </div>
+
       </div>
     </div>
   );

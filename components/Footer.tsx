@@ -55,50 +55,41 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-charcoal text-stone-400">
-      {/* Newsletter strip */}
-      <div className="border-b border-stone-800 bg-gradient-to-r from-brass/10 via-plum/10 to-brass/10">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center gap-4 text-center md:flex-row md:justify-between md:text-left">
-            <div>
-              <h3 className="text-lg font-semibold text-white">Stay in the loop 🍃</h3>
-              <p className="mt-1 text-sm text-stone-400">
-                Get fresh deals, new arrivals, and seasonal recipes in your inbox.
-              </p>
-            </div>
-            <NewsletterForm />
+    <footer className="bg-dark text-white">
+      <div className="mx-auto max-w-7xl px-6 py-20 lg:px-8 lg:py-24">
+        
+        {/* Newsletter Section */}
+        <div className="flex flex-col items-start justify-between gap-8 border-b border-white/10 pb-16 lg:flex-row lg:items-center">
+          <div className="max-w-md">
+            <h3 className="font-display text-3xl font-light tracking-tight">Stay connected</h3>
+            <p className="mt-4 text-sm leading-relaxed text-white/60">
+              Join our newsletter for exclusive recipes, seasonal arrivals, and stories from the farm. No spam, just pure goodness.
+            </p>
           </div>
+          <NewsletterForm />
         </div>
-      </div>
 
-      {/* Main footer grid */}
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
-          {/* Brand column */}
+        {/* Main Links Grid */}
+        <div className="grid grid-cols-1 gap-12 pt-16 md:grid-cols-4 lg:gap-8">
+          
+          {/* Brand Info */}
           <div className="md:col-span-1">
-            <Link href="/" className="inline-flex items-center gap-2.5" id="footer-logo">
-              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-yellow-400 to-orange-500 shadow-md shadow-yellow-500/40">
-                <svg className="h-5 w-5 text-charcoal" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z" />
-                </svg>
-              </span>
-              <span className="font-display text-xl font-bold text-white">
-                Seseme<span className="text-yellow-400">Foods</span>
+            <Link href="/" className="inline-flex items-center gap-3" id="footer-logo">
+              <span className="font-display text-2xl font-bold tracking-tight">
+                Seseme<span className="text-brass">Foods</span>
               </span>
             </Link>
-            <p className="mt-4 text-sm leading-relaxed">
-              Bringing the finest natural ingredients from farm to table. Quality you can taste in
-              every bite.
+            <p className="mt-6 text-sm leading-relaxed text-white/60">
+              Curating the finest natural ingredients from sustainable farms directly to your table.
             </p>
-            {/* Socials */}
-            <div className="mt-6 flex gap-3">
+            
+            <div className="mt-8 flex gap-4">
               {socials.map((s) => (
                 <a
                   key={s.label}
                   href={s.href}
                   aria-label={s.label}
-                  id={`footer-social-${s.label.toLowerCase().replace(/\s|\//g, '-')}`}
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-stone-800 text-stone-400 transition hover:bg-brass hover:text-charcoal"
+                  className="text-white/40 transition-colors hover:text-brass"
                 >
                   {s.icon}
                 </a>
@@ -106,16 +97,16 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Link columns */}
+          {/* Columns */}
           {Object.entries(footerLinks).map(([title, links]) => (
-            <div key={title}>
-              <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white">
+            <div key={title} className="md:pl-8">
+              <h4 className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">
                 {title}
               </h4>
-              <ul className="space-y-2">
+              <ul className="mt-6 space-y-4">
                 {links.map((l) => (
                   <li key={l.label}>
-                    <Link href={l.href} className="text-sm transition-colors hover:text-yellow-400">
+                    <Link href={l.href} className="text-sm text-white/60 transition-colors hover:text-white">
                       {l.label}
                     </Link>
                   </li>
@@ -125,21 +116,21 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-stone-800 pt-8 text-xs sm:flex-row">
-          <p>© {new Date().getFullYear()} SesemeFoods. All rights reserved.</p>
-          <div className="flex gap-5">
-            <Link href="/privacy" className="hover:text-yellow-400">
+        {/* Bottom Bar */}
+        <div className="mt-20 flex flex-col items-center justify-between gap-6 border-t border-white/10 pt-8 sm:flex-row">
+          <p className="text-sm text-white/40">
+            © {new Date().getFullYear()} SesemeFoods. All rights reserved.
+          </p>
+          <div className="flex gap-6 text-sm text-white/40">
+            <Link href="/privacy" className="transition-colors hover:text-white">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="hover:text-yellow-400">
+            <Link href="/terms" className="transition-colors hover:text-white">
               Terms of Service
-            </Link>
-            <Link href="/cookies" className="hover:text-yellow-400">
-              Cookie Policy
             </Link>
           </div>
         </div>
+        
       </div>
     </footer>
   );
