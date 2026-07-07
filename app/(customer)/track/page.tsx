@@ -68,7 +68,7 @@ function TrackOrderContent() {
         {/* ── HEADER ──────────────────────────────────────────────────────── */}
         <div className="mb-12 text-center animate-slide-up">
           <h1 className="font-display text-4xl font-light tracking-tight text-content lg:text-6xl">
-            Track Package
+            Track Your Order
           </h1>
           <p className="mt-4 text-muted">
             Enter your order tracking number to see live delivery updates.

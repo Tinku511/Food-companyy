@@ -5,12 +5,11 @@ import { prisma } from '@/lib/prisma';
 import ProductCard from '@/components/ProductCard';
 
 export const metadata: Metadata = {
-  title: 'SesemeFoods — Farm-Fresh Natural Foods',
+  title: 'SesemeFoods | Farm-Fresh Natural Foods',
   description:
     'Discover the finest natural, farm-to-table food products. Shop snacks, beverages, dairy, and bakery items crafted with care.',
 };
 
-// ─── Data fetching ───────────────────────────────────────────────────────────
 async function getFeaturedProducts() {
   try {
     return await prisma.product.findMany({
@@ -23,214 +22,210 @@ async function getFeaturedProducts() {
   }
 }
 
-// ─── Sub-components ──────────────────────────────────────────────────────────
-const features = [
-  {
-    icon: (
-      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1M4.22 4.22l.71.71M18.36 5.64l.71-.71M1 12h1m20 0h1M4.22 19.78l.71-.71M18.36 18.36l.71.71M12 7a5 5 0 000 10 5 5 0 000-10z" />
-      </svg>
-    ),
-    title: '100% Natural',
-    desc: 'No artificial preservatives. Honest, whole ingredients.',
-  },
-  {
-    icon: (
-      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414A1 1 0 0121 11.414V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
-      </svg>
-    ),
-    title: 'Fast Delivery',
-    desc: 'Shipped within 24 hours. Freshness guaranteed.',
-  },
-  {
-    icon: (
-      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-      </svg>
-    ),
-    title: 'Quality Assured',
-    desc: 'Rigorously tested. Only the finest leaves our farm.',
-  },
-];
-
 const categories = [
   {
-    name: 'Snacks',
-    image: 'https://images.unsplash.com/photo-1599490659213-e2b9527bd087?w=800&q=80',
-    desc: 'Guilt-free munching',
+    name: 'Artisan Bakery',
+    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1600&q=80',
+    desc: 'Baked every morning using heritage grains.',
+    path: 'Bakery',
   },
   {
-    name: 'Beverages',
-    image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=800&q=80',
-    desc: 'Refresh naturally',
+    name: 'Premium Dairy',
+    image: 'https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=1600&q=80',
+    desc: 'Rich, unhomogenized milk from pasture-raised cows.',
+    path: 'Dairy',
   },
   {
-    name: 'Dairy',
-    image: 'https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=800&q=80',
-    desc: 'Farm-fresh milk',
-  },
-  {
-    name: 'Bakery',
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80',
-    desc: 'Baked every morning',
+    name: 'Natural Beverages',
+    image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=1600&q=80',
+    desc: 'Cold-pressed and ethically brewed.',
+    path: 'Beverages',
   },
 ];
 
-// ─── Page ────────────────────────────────────────────────────────────────────
 export default async function HomePage() {
   const featured = await getFeaturedProducts();
 
   return (
-    <div className="bg-background">
-      {/* ─── HERO (Editorial Split) ────────────────────────────────── */}
-      <section className="relative mx-auto flex min-h-[90vh] max-w-[1600px] flex-col items-center justify-between px-6 py-20 lg:flex-row lg:px-12 xl:px-24">
-        <div className="z-10 flex w-full flex-col justify-center lg:w-1/2 lg:pr-12 xl:pr-24">
-          <span className="mb-8 inline-block font-sans text-sm font-semibold uppercase tracking-[0.2em] text-muted">
-            Est. 2024 • Organic
-          </span>
-          <h1 className="text-balance font-display text-6xl font-light leading-[1.05] tracking-tight text-content sm:text-7xl lg:text-8xl">
-            Pure food. <br />
-            <span className="italic text-brass">Honest roots.</span>
-          </h1>
-          <p className="mt-8 max-w-lg text-balance text-lg leading-relaxed text-muted sm:text-xl">
-            We believe in the power of natural, farm-sourced ingredients. Discover a curated selection of whole foods crafted to nourish your body and elevate your daily rituals.
-          </p>
-          <div className="mt-12 flex flex-col gap-4 sm:flex-row">
-            <Link href="/products" className="btn-primary px-8 py-4 text-base">
-              Shop Collection
-            </Link>
-            <Link href="/about" className="btn-secondary px-8 py-4 text-base">
-              Our Story
+    <div className="bg-[#FAF8F4] overflow-hidden selection:bg-[#4A2E35] selection:text-surface">
+      
+      {/* ─── 1. MASKED CINEMATIC HERO ────────────────────────────────── */}
+      <section className="relative h-[100svh] w-full overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=2400&q=90"
+          alt="Immersive nature"
+          fill
+          className="object-cover scale-110 animate-[scale-in_10s_cubic-bezier(0.16,1,0.3,1)_forwards]"
+          priority
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-dark/80 via-dark/20 to-transparent" />
+        
+        <div className="absolute inset-x-0 bottom-0 flex flex-col p-8 md:p-16 lg:p-24 pb-32">
+          
+          {/* Masked Typography Reveal */}
+          <div className="overflow-hidden mb-6">
+            <span className="block font-sans text-xs md:text-sm font-bold uppercase tracking-[0.4em] text-brass animate-mask-up">
+              Uncompromised Quality
+            </span>
+          </div>
+
+          <div className="overflow-hidden">
+             <h1 className="font-display text-[14vw] leading-[0.8] tracking-tighter text-surface animate-mask-up mix-blend-overlay" style={{ animationDelay: '0.1s' }}>
+               Nature's
+             </h1>
+          </div>
+          <div className="overflow-hidden">
+             <h1 className="font-display text-[14vw] leading-[0.8] tracking-tighter text-surface animate-mask-up mix-blend-overlay" style={{ animationDelay: '0.2s' }}>
+               Purest.
+             </h1>
+          </div>
+          
+          <div className="mt-16 overflow-hidden w-max">
+            <Link href="/products" className="group relative flex cursor-pointer items-center justify-center bg-surface px-12 py-5 text-sm font-semibold uppercase tracking-[0.2em] text-dark overflow-hidden animate-mask-up" style={{ animationDelay: '0.4s' }}>
+              <span className="relative z-10 transition-colors duration-700 group-hover:text-surface">Enter Collection</span>
+              <div className="absolute inset-0 z-0 h-full w-full translate-y-full bg-[#4A2E35] transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
             </Link>
           </div>
         </div>
-        
-        <div className="relative mt-16 flex w-full justify-center lg:mt-0 lg:w-1/2 lg:justify-end">
-          <div className="relative h-[60vh] w-full max-w-[600px] overflow-hidden rounded-[2rem] lg:h-[80vh]">
-            <Image
-              src="https://images.unsplash.com/photo-1542838132-92c53300491e?w=1600&q=80"
-              alt="Farm fresh produce"
-              fill
-              className="object-cover transition-transform duration-[20s] hover:scale-110"
-              priority
-            />
+
+        {/* Floating Scroll indicator */}
+        <div className="absolute bottom-12 right-12 flex flex-col items-center gap-4 opacity-0 animate-[fade-in_2s_ease_2s_both]">
+          <span className="text-[9px] uppercase tracking-[0.4em] text-surface/50 rotate-90 origin-right">Scroll</span>
+          <div className="h-24 w-[1px] bg-gradient-to-b from-surface/50 to-transparent overflow-hidden">
+             <div className="w-full h-full bg-surface animate-[mask-up_2s_ease-in-out_infinite]" />
           </div>
         </div>
       </section>
 
-      {/* ─── FEATURED PRODUCTS (Minimal Grid) ──────────────────────── */}
-      <section className="bg-surface py-32" aria-label="Featured products">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="flex flex-col items-end justify-between gap-6 md:flex-row">
-            <div className="max-w-2xl">
-              <h2 className="font-display text-4xl font-light tracking-tight text-content sm:text-5xl">
-                Curated Selection
-              </h2>
-              <p className="mt-4 text-lg text-muted">
-                Seasonal highlights and customer favorites, hand-picked for you.
-              </p>
-            </div>
-            <Link href="/products" className="group inline-flex items-center gap-2 font-semibold text-brass transition-colors hover:text-brass-hover">
-              View All
-              <svg className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </Link>
+      {/* ─── 2. STICKY STORYTELLING ────────────────────────────────────── */}
+      <section className="bg-dark text-surface relative h-[200vh]" aria-label="Philosophy">
+        <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
+           
+           <div className="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
+
+           <div className="z-10 max-w-[1600px] px-6 lg:px-24 w-full flex flex-col md:flex-row justify-between items-center gap-16">
+              <div className="w-full md:w-1/2">
+                <span className="font-sans text-xs font-semibold uppercase tracking-[0.4em] text-brass mb-8 block">
+                  The Philosophy
+                </span>
+                <h2 className="font-display text-5xl md:text-7xl leading-[1.1] tracking-tighter">
+                  We reject the <span className="italic text-[#4A2E35]">artificial.</span>
+                </h2>
+                <p className="mt-8 text-lg font-light leading-relaxed text-surface/60 max-w-md">
+                  No shortcuts. No additives. We partner exclusively with sustainable farms to bring you food exactly as nature intended—raw, untamed, and entirely authentic.
+                </p>
+              </div>
+
+              {/* Massive Parallax Typography */}
+              <div className="hidden md:block w-full md:w-1/2 relative h-[50vh]">
+                 <h2 className="absolute top-1/2 -translate-y-1/2 left-0 font-display text-[25vw] leading-none text-surface/5 select-none pointer-events-none">
+                    PURE.
+                 </h2>
+              </div>
+           </div>
+        </div>
+      </section>
+
+      {/* ─── 3. BORDERLESS GALLERY (Featured Products) ────────────────── */}
+      <section className="py-40 lg:py-64 relative bg-[#FAF8F4]" aria-label="Selected works">
+        <div className="mx-auto max-w-[1800px] px-6 lg:px-12 xl:px-24">
+          
+          <div className="mb-32 flex flex-col md:flex-row items-end justify-between border-b border-dark/10 pb-16">
+             <div className="overflow-hidden">
+               <h2 className="font-display text-[7vw] leading-none tracking-tighter text-content animate-mask-up" style={{ animationDelay: '0.2s' }}>
+                 Curated <br/><span className="italic text-muted">Archive.</span>
+               </h2>
+             </div>
+             <Link href="/products" className="group mt-12 md:mt-0 flex items-center gap-4 text-xs font-semibold uppercase tracking-[0.2em] text-content transition-colors hover:text-[#4A2E35]">
+               <span>View Complete Index</span>
+               <div className="h-px w-12 bg-content transition-all duration-500 group-hover:w-24 group-hover:bg-[#4A2E35]" />
+             </Link>
           </div>
 
-          {featured.length > 0 ? (
-            <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-4">
-              {featured.map((product) => (
-                <div key={product.id}>
-                  <ProductCard product={product} />
+          {featured.length > 0 && (
+            <div className="flex flex-col gap-32 md:gap-48">
+              {featured.map((product, index) => (
+                <div key={product.id} className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-12 md:gap-24`}>
+                   
+                   {/* Massive Borderless Image */}
+                   <div className="w-full md:w-7/12 relative aspect-[4/5] overflow-hidden group cursor-pointer">
+                      <Image
+                        src={product.imageUrl}
+                        alt={product.name}
+                        fill
+                        className="object-cover transition-transform duration-[2000ms] ease-[cubic-bezier(0.16,1,0.3,1)] scale-100 group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, 60vw"
+                      />
+                      {/* Interactive Cursor Area (Conceptual hover effect) */}
+                      <div className="absolute inset-0 bg-[#4A2E35]/20 opacity-0 transition-opacity duration-700 group-hover:opacity-100 mix-blend-multiply" />
+                   </div>
+
+                   {/* Detached Typography Block */}
+                   <div className="w-full md:w-4/12 flex flex-col justify-center">
+                      <span className="font-sans text-xs font-bold uppercase tracking-[0.3em] text-brass mb-6">
+                        No. 0{index + 1} &mdash; {product.category}
+                      </span>
+                      <h3 className="font-display text-5xl md:text-6xl font-light text-content mb-8 tracking-tight">
+                        {product.name}
+                      </h3>
+                      <p className="text-lg text-muted font-light mb-12 max-w-sm">
+                        {product.description.substring(0, 100)}...
+                      </p>
+                      
+                      <div className="flex items-center justify-between border-t border-dark/10 pt-8">
+                         <span className="font-sans text-lg tracking-widest text-content">
+                           ₹{Number(product.price).toFixed(2)}
+                         </span>
+                         <Link href={`/products/${product.id}`} className="group relative overflow-hidden rounded-full border border-dark/20 px-8 py-3 text-xs font-semibold uppercase tracking-[0.1em] text-content transition-colors duration-500 hover:border-transparent hover:text-surface">
+                            <span className="relative z-10">Discover</span>
+                            <div className="absolute inset-0 z-0 h-full w-full translate-y-full bg-[#4A2E35] transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0" />
+                         </Link>
+                      </div>
+                   </div>
                 </div>
               ))}
-            </div>
-          ) : (
-            <div className="py-24 text-center">
-              <p className="text-muted">No products available at the moment.</p>
             </div>
           )}
         </div>
       </section>
 
-      {/* ─── CATEGORIES (Editorial Masonry-ish) ────────────────────── */}
-      <section className="py-32" aria-label="Product categories">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mb-20 text-center">
-            <h2 className="font-display text-4xl font-light tracking-tight text-content sm:text-5xl">Shop by Category</h2>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:gap-12">
-            {categories.map((cat, i) => (
-              <Link
-                key={cat.name}
-                href={`/products?category=${cat.name}`}
-                className={`group relative overflow-hidden rounded-[2rem] bg-surface ${i % 3 === 0 ? 'md:col-span-2 md:h-[600px]' : 'h-[400px]'}`}
-              >
+      {/* ─── 4. TYPOGRAPHY ACCORDION CATEGORIES ──────────────────────── */}
+      <section className="h-[100svh] flex flex-col lg:flex-row bg-[#FAF8F4] overflow-hidden" aria-label="Collections">
+         {categories.map((cat, i) => (
+           <Link
+             key={cat.name}
+             href={`/products?category=${cat.path}`}
+             className="group relative flex-1 border-t lg:border-t-0 lg:border-r border-dark/10 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] hover:flex-[3] overflow-hidden flex flex-col justify-end p-8 md:p-12"
+           >
+             {/* Background Image Reveal */}
+             <div className="absolute inset-0 z-0">
                 <Image
                   src={cat.image}
                   alt={cat.name}
                   fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                  className="object-cover scale-125 grayscale-[0.8] opacity-0 transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-100 group-hover:grayscale-0 group-hover:opacity-100"
+                  sizes="100vw"
                 />
-                <div className="absolute inset-0 bg-dark/20 transition-opacity duration-300 group-hover:bg-dark/40" />
-                <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-                  <h3 className="font-display text-4xl font-light text-white md:text-5xl">{cat.name}</h3>
-                  <p className="mt-4 translate-y-4 text-lg text-white/90 opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                    {cat.desc}
-                  </p>
+                <div className="absolute inset-0 bg-gradient-to-t from-dark/90 via-dark/40 to-transparent opacity-0 transition-opacity duration-1000 group-hover:opacity-100" />
+             </div>
+
+             <div className="relative z-10 flex flex-col md:flex-row md:items-end justify-between w-full">
+                <div>
+                   <span className="font-display text-2xl text-muted group-hover:text-brass transition-colors duration-500">0{i + 1}</span>
+                   <h3 className="font-display text-3xl md:text-5xl lg:text-[4vw] leading-none font-light text-content group-hover:text-surface transition-colors duration-500 mt-4 whitespace-nowrap">
+                     {cat.name}
+                   </h3>
                 </div>
-              </Link>
-            ))}
-          </div>
-        </div>
+                
+                <div className="hidden lg:block opacity-0 translate-y-8 transition-all duration-700 delay-100 group-hover:opacity-100 group-hover:translate-y-0">
+                   <p className="text-surface/80 text-sm max-w-[200px]">{cat.desc}</p>
+                </div>
+             </div>
+           </Link>
+         ))}
       </section>
 
-      {/* ─── EDITORIAL PULL-QUOTE / WHY CHOOSE US ──────────────────── */}
-      <section className="bg-dark py-32 text-center text-white sm:py-40" aria-label="Philosophy">
-        <div className="mx-auto max-w-4xl px-6 lg:px-8">
-          <svg className="mx-auto mb-8 h-12 w-12 text-brass opacity-50" fill="currentColor" viewBox="0 0 32 32">
-            <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.896 3.456-8.352 9.12-8.352 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-          </svg>
-          <p className="text-balance font-display text-3xl font-light leading-relaxed sm:text-5xl lg:leading-snug">
-            "From the soil to your table, we maintain absolute transparency and strict standards. We partner exclusively with sustainable farms that share our vision for a healthier future."
-          </p>
-          
-          <div className="mt-20 grid grid-cols-1 gap-12 sm:grid-cols-3">
-            {features.map((f) => (
-              <div key={f.title} className="flex flex-col items-center text-center">
-                <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full border border-white/20 text-brass">
-                  {f.icon}
-                </div>
-                <h3 className="font-sans text-lg font-semibold">{f.title}</h3>
-                <p className="mt-2 text-sm text-white/60">{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── MINIMAL CTA ──────────────────────────────────────────────── */}
-      <section className="bg-surface py-32 text-center" aria-label="Call to action">
-        <div className="mx-auto max-w-2xl px-6">
-          <h2 className="font-display text-4xl font-light tracking-tight text-content sm:text-5xl">
-            Taste the difference.
-          </h2>
-          <p className="mt-6 text-lg text-muted">
-            Join thousands of happy customers who trust SesemeFoods for their daily nutrition.
-          </p>
-          <div className="mt-12 flex flex-col justify-center gap-4 sm:flex-row">
-            <Link href="/products" className="btn-primary px-10 py-4 text-base">
-              Start Shopping
-            </Link>
-            <Link href="/contact" className="btn-secondary px-10 py-4 text-base">
-              Talk to Us
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

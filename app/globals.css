@@ -7,32 +7,34 @@
 /* ─── CSS Custom Properties ─────────────────────────────────────────────── */
 :root {
   /* Strict Premium Palette (User Defined) */
-  --background: #F8F8F6;
+  --background: #FAF8F4;
   --surface: #FFFFFF;
-  --dark: #181818;
-  --content: #222222;
+  --dark: #1F1F1F;
+  --content: #1F1F1F;
   --muted: #666666;
   --brass: #C6922D;
   --brass-hover: #B8860B;
-  --plum: #5A2D3B;
-  --border: #E7E5E4;
+  --forest: #23422F;
+  --wine: #5B3142;
+  --border: #E8E5DF;
+  --light-section: #F4F1EA;
   --success: #2E7D32;
   --warning: #F59E0B;
   --danger: #D32F2F;
   
   /* Legacy mappings */
-  --foreground: #222222;
+  --foreground: #1F1F1F;
   --card-bg: #FFFFFF;
-  --card-border: #E7E5E4;
+  --card-border: #E8E5DF;
 }
 
 @media (prefers-color-scheme: dark) {
   /* Enforcing light mode premium look everywhere for now */
   :root {
-    --background: #F8F8F6;
-    --foreground: #222222;
+    --background: #FAF8F4;
+    --foreground: #1F1F1F;
     --card-bg: #FFFFFF;
-    --card-border: #E7E5E4;
+    --card-border: #E8E5DF;
     --muted: #666666;
   }
 }
@@ -226,15 +228,15 @@ body {
 @layer components {
   /* Premium Buttons */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brass px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg hover:bg-brass-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-2 active:translate-y-0 active:shadow-md;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brass px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.03] hover:shadow-lg hover:bg-brass-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brass focus-visible:ring-offset-2 active:translate-y-0 active:shadow-md;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-border bg-transparent px-6 py-3 text-sm font-semibold text-content transition-all duration-300 hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border focus-visible:ring-offset-2 active:translate-y-0;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-border bg-transparent px-6 py-3 text-sm font-semibold text-content transition-all duration-200 hover:bg-background hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-border focus-visible:ring-offset-2 active:translate-y-0;
   }
 
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-transparent px-6 py-3 text-sm font-semibold text-content transition-all duration-300 hover:bg-background;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-transparent px-6 py-3 text-sm font-semibold text-content transition-all duration-200 hover:bg-background;
   }
 
   /* Form Inputs - Fixed invisible text */

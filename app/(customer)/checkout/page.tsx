@@ -30,7 +30,12 @@ function loadRazorpayScript(): Promise<boolean> {
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push('/login?callbackUrl=/checkout');
+    },
+  });
   const { items, cartTotal, clearCart } = useCart();
 
   const [form, setForm] = useState({
@@ -44,6 +49,17 @@ export default function CheckoutPage() {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  if (status === 'loading') {
+    return (
+      <div className="flex min-h-[70vh] flex-col items-center justify-center bg-background px-4">
+        <svg className="h-10 w-10 animate-spin text-brass" fill="none" viewBox="0 0 24 24">
+          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={4} />
+          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+        </svg>
+      </div>
+    );
+  }
 
   if (items.length === 0) {
     return (

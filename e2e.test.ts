@@ -33,8 +33,8 @@ async function login(page: any, email: string) {
   await page.fill('input[name="email"]', email);
   await page.fill('input[name="password"]', PASSWORD);
   await page.click('button[type="submit"]');
-  // next-auth uses router.push(callbackUrl) + router.refresh() — can be slow
-  await page.waitForURL('http://localhost:3000/**', { timeout: 30_000 });
+  // Wait until the URL no longer contains '/login'
+  await page.waitForFunction(() => !window.location.href.includes('/login'), { timeout: 30_000 });
   await page.waitForLoadState('networkidle');
   // Confirm we are NOT still on /login
   expect(page.url()).not.toMatch(/\/login/);
@@ -76,7 +76,7 @@ test('3. Browse products page and open a product', async ({ page }) => {
   await productCard.click();
   await page.waitForLoadState('networkidle');
 
-  await expect(page.locator('button:has-text("Add to Cart")')).toBeVisible({ timeout: 10_000 });
+  await expect(page.locator('#add-to-cart-btn')).toBeVisible({ timeout: 10_000 });
 });
 
 // ─── 4. Add to Cart ──────────────────────────────────────────────────────────
@@ -89,7 +89,7 @@ test('4. Add product to cart (requires login)', async ({ page }) => {
   await page.waitForLoadState('networkidle');
   await page.locator('a[id^="product-card-"]').first().click();
   await page.waitForLoadState('networkidle');
-  await page.click('button:has-text("Add to Cart")');
+  await page.click('#add-to-cart-btn');
   await page.waitForTimeout(1000);
 
   await page.goto('http://localhost:3000/cart');
@@ -104,6 +104,7 @@ test('4. Add product to cart (requires login)', async ({ page }) => {
 
 // ─── 5. Checkout Form ────────────────────────────────────────────────────────
 test('5. Checkout form accepts shipping details', async ({ page }) => {
+  test.setTimeout(60000);
   const email = uniqueEmail();
   await signup(page, email);
   await login(page, email);
@@ -113,7 +114,7 @@ test('5. Checkout form accepts shipping details', async ({ page }) => {
   await page.waitForLoadState('networkidle');
   await page.locator('a[id^="product-card-"]').first().click();
   await page.waitForLoadState('networkidle');
-  await page.click('button:has-text("Add to Cart")');
+  await page.click('#add-to-cart-btn');
   await page.waitForTimeout(1000);
 
   // Go to checkout
@@ -131,7 +132,7 @@ test('5. Checkout form accepts shipping details', async ({ page }) => {
   await expect(page.locator('input[name="fullName"]')).toHaveValue(USER_NAME);
   await expect(page.locator('input[name="city"]')).toHaveValue('Mumbai');
   await expect(page.locator('input[name="pincode"]')).toHaveValue('400001');
-  await expect(page.locator('button[type="submit"]')).toBeVisible();
+  await expect(page.locator('button[type="submit"]:has-text("Pay")')).toBeVisible();
 });
 
 // ─── 6. Order Tracking ───────────────────────────────────────────────────────

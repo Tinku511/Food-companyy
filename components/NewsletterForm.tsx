@@ -11,12 +11,12 @@ export default function NewsletterForm() {
         id="footer-email-input"
         type="email"
         placeholder="Email address"
-        className="flex-1 rounded-full border border-white/10 bg-white/5 px-6 py-3.5 text-sm text-white placeholder-white/40 outline-none transition-all duration-300 focus:border-brass focus:bg-white/10 focus:ring-4 focus:ring-brass/10"
+        className="flex-1 rounded-none border-b border-surface/20 bg-transparent px-2 py-4 text-sm text-surface placeholder-surface/40 outline-none transition-all duration-300 focus:border-surface focus:bg-surface/5"
       />
       <button
         id="footer-newsletter-submit"
         type="submit"
-        className="btn-primary whitespace-nowrap px-8"
+        className="text-xs uppercase tracking-widest text-surface/70 transition-colors duration-300 hover:text-surface px-4 border-b border-transparent hover:border-surface"
       >
         Subscribe
       </button>
