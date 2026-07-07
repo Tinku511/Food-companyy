@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import type { BlogPost } from '@prisma/client';
-import Image from 'next/image';
 
 type BlogPostWithAuthor = BlogPost & { author: { name: string } };
 
@@ -68,11 +67,11 @@ export default function BlogListingPage() {
               <Link href={`/blog/${featuredPost.slug}`} className="group block animate-fade-in">
                 <div className="relative aspect-[21/9] w-full overflow-hidden rounded-[2.5rem] bg-surface shadow-sm">
                   {featuredPost.coverImage ? (
-                    <Image
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
                       src={featuredPost.coverImage}
                       alt={featuredPost.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-surface">
@@ -116,11 +115,11 @@ export default function BlogListingPage() {
                   >
                     <div className="relative mb-6 aspect-[4/3] w-full overflow-hidden rounded-[2rem] bg-surface shadow-sm">
                       {post.coverImage ? (
-                        <Image
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
                           src={post.coverImage}
                           alt={post.title}
-                          fill
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                       ) : (
                         <div className="flex h-full w-full items-center justify-center bg-surface">

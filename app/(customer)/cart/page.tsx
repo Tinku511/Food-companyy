@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/components/CartProvider';
 
@@ -78,11 +77,12 @@ export default function CartPage() {
                   >
                     {/* Image */}
                     <Link href={`/products/${item.id}`} className="relative aspect-square w-28 shrink-0 overflow-hidden rounded-2xl bg-background sm:w-32">
-                      <Image
-                        src={item.imageUrl}
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={item.imageUrl || 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&q=80'}
                         alt={item.name}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&q=80'; }}
                       />
                     </Link>
 

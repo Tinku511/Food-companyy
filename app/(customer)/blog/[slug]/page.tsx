@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
-import Image from 'next/image';
 
 type BlogPost = {
   id: string;
@@ -122,12 +121,12 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
       {post.coverImage && (
         <div className="mx-auto mt-16 max-w-7xl px-4 sm:px-6 animate-fade-in delay-200">
           <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[2.5rem] bg-surface shadow-2xl lg:aspect-[21/9]">
-            <Image
+        <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[2.5rem] bg-surface shadow-2xl lg:aspect-[21/9]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={post.coverImage}
               alt={post.title}
-              fill
-              className="object-cover"
-              priority
+              className="absolute inset-0 h-full w-full object-cover"
             />
           </div>
         </div>

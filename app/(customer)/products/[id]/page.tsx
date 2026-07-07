@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
@@ -79,13 +78,12 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
           {/* LEFT: IMAGE GALLERY */}
           <div className="w-full lg:w-[55%]">
             <div className="group relative aspect-square w-full overflow-hidden rounded-[2rem] bg-surface">
-              <Image
-                src={product.imageUrl}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={product.imageUrl || 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&q=80'}
                 alt={product.name}
-                fill
-                className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.15]"
-                sizes="(max-width: 1024px) 100vw, 55vw"
-                priority
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-[1.15]"
+                onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=800&q=80'; }}
               />
               {!inStock && (
                 <div className="absolute inset-0 flex items-center justify-center bg-background/60 backdrop-blur-sm">
@@ -96,19 +94,19 @@ export default async function ProductDetailPage({ params }: { params: { id: stri
               )}
             </div>
 
-            {/* Thumbnails (Static placeholders to match Apple Store feel) */}
+            {/* Thumbnails */}
             <div className="mt-6 flex gap-4 overflow-x-auto pb-4 hide-scrollbar">
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
                   className={`relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl border-2 transition-all duration-300 cursor-pointer ${i === 1 ? 'border-brass' : 'border-transparent opacity-60 hover:opacity-100'}`}
                 >
-                  <Image
-                    src={product.imageUrl}
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={product.imageUrl || 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&q=80'}
                     alt={`${product.name} view ${i}`}
-                    fill
-                    className="object-cover"
-                    sizes="96px"
+                    className="h-full w-full object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&q=80'; }}
                   />
                 </div>
               ))}

@@ -1,4 +1,6 @@
-import Image from 'next/image';
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import type { Product } from '@prisma/client';
 
@@ -7,9 +9,13 @@ interface ProductCardProps {
   priority?: boolean;
 }
 
-export default function ProductCard({ product, priority = false }: ProductCardProps) {
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80';
+
+export default function ProductCard({ product }: ProductCardProps) {
   const price = Number(product.price).toFixed(2);
   const outOfStock = product.stock === 0;
+  const [imgSrc, setImgSrc] = useState(product.imageUrl || FALLBACK_IMAGE);
+  const [imgError, setImgError] = useState(false);
 
   return (
     <div className="group relative flex flex-col">
@@ -33,13 +39,17 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         className="relative block aspect-[3/4] w-full overflow-hidden bg-[#e0dcd3]"
         aria-label={`View ${product.name}`}
       >
-        <Image
-          src={product.imageUrl}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={imgError ? FALLBACK_IMAGE : imgSrc}
           alt={product.name}
-          fill
-          className="object-cover transition-transform duration-[1500ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.08] grayscale-[0.2] group-hover:grayscale-0"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          priority={priority}
+          onError={() => {
+            if (!imgError) {
+              setImgSrc(FALLBACK_IMAGE);
+              setImgError(true);
+            }
+          }}
+          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1500ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.08] grayscale-[0.2] group-hover:grayscale-0"
         />
         
         {/* Abstract Vignette */}
