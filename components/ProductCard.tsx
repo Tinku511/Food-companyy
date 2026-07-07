@@ -9,12 +9,19 @@ interface ProductCardProps {
   priority?: boolean;
 }
 
-const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80';
+// Category-specific emoji fallbacks
+const CATEGORY_ICONS: Record<string, string> = {
+  Snacks: '🍿',
+  Beverages: '🥤',
+  Dairy: '🧀',
+  Bakery: '🍞',
+  Pantry: '🫙',
+  'Fresh Produce': '🥗',
+};
 
 export default function ProductCard({ product }: ProductCardProps) {
   const price = Number(product.price).toFixed(2);
   const outOfStock = product.stock === 0;
-  const [imgSrc, setImgSrc] = useState(product.imageUrl || FALLBACK_IMAGE);
   const [imgError, setImgError] = useState(false);
 
   return (
@@ -39,18 +46,25 @@ export default function ProductCard({ product }: ProductCardProps) {
         className="relative block aspect-[3/4] w-full overflow-hidden bg-[#e0dcd3]"
         aria-label={`View ${product.name}`}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imgError ? FALLBACK_IMAGE : imgSrc}
-          alt={product.name}
-          onError={() => {
-            if (!imgError) {
-              setImgSrc(FALLBACK_IMAGE);
-              setImgError(true);
-            }
-          }}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1500ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.08] grayscale-[0.2] group-hover:grayscale-0"
-        />
+        {!imgError ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            onError={() => setImgError(true)}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1500ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] group-hover:scale-[1.08]"
+          />
+        ) : (
+          /* Beautiful placeholder when image fails to load */
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-stone-100 to-stone-200 gap-4">
+            <span className="text-6xl">
+              {CATEGORY_ICONS[product.category] ?? '🌿'}
+            </span>
+            <span className="text-xs font-semibold uppercase tracking-widest text-stone-400">
+              {product.category}
+            </span>
+          </div>
+        )}
         
         {/* Abstract Vignette */}
         <div className="absolute inset-0 bg-gradient-to-t from-dark/30 via-transparent to-transparent opacity-0 transition-opacity duration-1000 group-hover:opacity-100" />
