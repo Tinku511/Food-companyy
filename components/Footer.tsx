@@ -9,7 +9,7 @@ const footerLinks = {
   ],
   Company: [
     { label: 'Our Story', href: '/about' },
-    { label: 'Journal', href: '/journal' },
+    { label: 'Journal', href: '/blog' },
     { label: 'Careers', href: '/careers' },
   ],
   Support: [

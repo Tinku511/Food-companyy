@@ -23,7 +23,7 @@ export default function Navbar() {
   const navLinks = [
     { href: '/products', label: 'Shop' },
     { href: '/about', label: 'Story' },
-    { href: '/journal', label: 'Journal' },
+    { href: '/blog', label: 'Journal' },
   ];
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
